@@ -46,7 +46,7 @@ create table Usuario(
     idPerfil int(11) default 0,
     constraint idPerfil_Usuario_fk foreign key (idPerfil) references Perfil(idPerfil)
 );
-z
+
 -- -------------------------------------------------------------------------------
 create table CategoriaProducto(
 	idCategoriaProducto int primary key auto_increment,
@@ -75,7 +75,7 @@ create table Carrito(
     constraint idUsuario_Carrito_fk foreign key(idUsuario) references Usuario (idUsuario)
 );
 
-create FormaPago (
+create table FormaPago (
   idFormaPago int primary key auto_increment,
   idUsuario int not null,
   numerotarjeta varchar(100) not null,
