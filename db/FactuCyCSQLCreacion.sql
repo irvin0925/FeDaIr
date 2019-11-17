@@ -82,14 +82,23 @@ create table Carrito(
     constraint idUsuario_Carrito_fk foreign key(idUsuario) references Usuario (idUsuario)
 );
 
+create FormaPago (
+  idFormaPago int primary key auto_increment,
+  idUsuario int not null,
+  numerotarjeta varchar(100) not null,
+  tipo varchar(50) not null);
+  
 create table FacturaEncabezado(
-	idFacturaEncabezado int primary key auto_increment,
+    idFacturaEncabezado int primary key auto_increment,
     fecha date,
     subTotal decimal(12,2),
     total decimal(12,2),
     impuesto decimal(12,2),
     idUsuario int not null,
-    constraint idCliente_FacturaEncabezado_fk foreign key(idUsuario) references Usuario(idUsuario)
+    idFormapago int null,
+    referencia int,
+    constraint idCliente_FacturaEncabezado_fk foreign key(idUsuario) references Usuario(idUsuario),
+    constraint idFormapago_FacturaEncabezado_fk foreign key(idFormapago) references FormaPago(idFormapago)
 );
 
 create table FacturaDetalle(
