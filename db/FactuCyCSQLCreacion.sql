@@ -59,6 +59,7 @@ create table Producto(
     precio decimal(12,2) not null,
     cantidadDisponible int,
     cantCompras int,
+    urlImg varchar(250),
     idCategoriaProducto int not null,
     constraint idCategoriaProducto_Producto_fk foreign key(idCategoriaProducto) references CategoriaProducto(idCategoriaProducto)
 );
