@@ -3,9 +3,9 @@ use FactuCyC;
 
 /*
 	Usuario
-    Menu (Apartados/Privilegios)
-    Perfil
-    Menu-Perfil
+    Menu (Apartados)
+    Perfil (Rol)
+    Menu-Perfil (Permisos)
     -------------------------------------------------------------
     CategoriaProducto
     Producto
@@ -66,13 +66,6 @@ create table Producto(
 
 -- -------------------------------------------------------------------------------
 
-/*create table FormaPago(
-	idFormaPago int primary key auto_increment,
-    descripcion varchar(75)
-);*/
-
--- -------------------------------------------------------------------------------
-
 create table Carrito(
 	idLineaCarrito int primary key auto_increment,
     idProducto int not null,
@@ -86,7 +79,9 @@ create FormaPago (
   idFormaPago int primary key auto_increment,
   idUsuario int not null,
   numerotarjeta varchar(100) not null,
-  tipo varchar(50) not null);
+  tipo varchar(50) not null,
+  constraint idUsuario_FormaPago_fk foreign key(idUsuario) references Usuario(idUsuario)
+);
   
 create table FacturaEncabezado(
     idFacturaEncabezado int primary key auto_increment,
@@ -96,7 +91,7 @@ create table FacturaEncabezado(
     impuesto decimal(12,2),
     idUsuario int not null,
     idFormapago int null,
-    referencia int,
+    referencia varchar(15),
     constraint idCliente_FacturaEncabezado_fk foreign key(idUsuario) references Usuario(idUsuario),
     constraint idFormapago_FacturaEncabezado_fk foreign key(idFormapago) references FormaPago(idFormapago)
 );
@@ -104,7 +99,7 @@ create table FacturaEncabezado(
 create table FacturaDetalle(
 	idFacturaEncabezado int not null,
     idFaturaDetalle int primary key auto_increment,
-    idProducto int not null,
     cant int(4),
+    idProducto int not null,
     constraint idProducto_FacturaDetalle_fk foreign key(idProducto) references Producto(idProducto)
 );
