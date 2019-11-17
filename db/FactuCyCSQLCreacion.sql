@@ -1,5 +1,5 @@
-create schema FactuCyC;
-use FactuCyC;
+create schema FeDaIr;
+use FeDaIr;
 
 /*
 	Usuario
@@ -46,7 +46,7 @@ create table Usuario(
     idPerfil int(11) default 0,
     constraint idPerfil_Usuario_fk foreign key (idPerfil) references Perfil(idPerfil)
 );
-
+z
 -- -------------------------------------------------------------------------------
 create table CategoriaProducto(
 	idCategoriaProducto int primary key auto_increment,
