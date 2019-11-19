@@ -2,7 +2,7 @@
 
 ---
 
-##Integrantes
+## Integrantes
 
 * Fernanda Fernandez @Ferfdz1995
 * Irvin Gonzalez
