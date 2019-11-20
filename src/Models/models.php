@@ -11,7 +11,7 @@ class Connection
 
     public function Connection()
     {
-        $this->host = ['host' => '25.18.99.248', 'dbname' => 'FeDaIr'];
+        $this->host = ['host' => '25.18.99.248', 'dbname' => 'hackathon2019'];
         $this->usu = 'fedair';
         $this->pass = 'Fedair2019*';
         $this->url = 'mysql:host=' . $this->host['host'] . ';dbname=' . $this->host['dbname'];
@@ -25,10 +25,8 @@ class Connection
             $this->conn = new mysqli($this->host['host'], $this->usu, $this->pass, $this->host['dbname']);
             $this->conn->set_charset('utf8');
             //$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo 'Conectados';
             return $this->conn;
         } catch (PDOException $exc) {
-            echo $exc;
             return null;
         }
     }
