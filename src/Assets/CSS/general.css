@@ -1,0 +1,74 @@
+/* static */
+
+a {
+    text-decoration: none;
+}
+
+.nav {
+    display: flex;
+    padding: 1.5em;
+    box-sizing: border-box;
+    background-color: #008cba;
+    box-shadow: 1px 1px 3px #000;
+}
+
+.nav-title {
+    color: white;
+    font-size: 2.5em;
+}
+
+.nav-list {
+    float: right;
+    display: flex;
+    height: 48px;
+    width: 100%;
+    list-style: none;
+    margin-left: 1.75em;
+}
+
+.nav-item {
+    padding: 1em;
+    min-height: 16px;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    background-color: #007caa;
+}
+
+/*Tableta*/
+
+@media screen and (max-width:1100px) {
+    .nav-title {
+        font-size: 2em;
+    }
+    .nav-list {
+        width: 15em;
+        position: absolute;
+        top: 5.5em;
+        right: 0;
+        display: block;
+        height: auto;
+        background-color: #008cba;
+        box-shadow: 1px 1px 3px #000;
+    }
+}
+
+/*Celular*/
+
+@media screen and (max-width:600px) {
+    .nav-title {
+        margin-top: .25em;
+        font-size: 1.75em;
+    }
+    .nav-list {
+        width: 15em;
+        position: absolute;
+        top: 5.5em;
+        right: 0;
+        display: block;
+        height: auto;
+        background-color: #008cba;
+        box-shadow: 1px 1px 3px #000;
+    }
+}

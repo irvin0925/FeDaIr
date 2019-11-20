@@ -1,0 +1,63 @@
+body {
+    background-color: #dddee0;
+}
+
+.btn-action {
+    background: url(../../Assets/IMG/cart.png) no-repeat;
+    background-size: 100%;
+    background-position: center;
+    height: 48px;
+    width: 48px;
+    cursor: pointer;
+}
+
+.box-login {
+    width: 25em;
+    background-color: #f7f7f7;
+    padding: 3.5em 2.5em;
+    border-radius: 17px;
+    border-color: #a0a1a3;
+}
+
+.nav-item-cart {
+    display: none;
+}
+
+@media screen and (max-width:1100px) {
+    .btn-action {
+        position: absolute;
+        right: 1em;
+        background: url(../../Assets/IMG/trLine.png) no-repeat;
+        background-size: 100%;
+        background-position: center;
+        height: 48px;
+        width: 48px;
+        cursor: pointer;
+    }
+    .nav-item-cart {
+        display: block;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .nav-item-cart {
+        display: block;
+    }
+    .btn-action {
+        position: absolute;
+        right: 1em;
+        background: url(../../Assets/IMG/trLine.png) no-repeat;
+        background-size: 100%;
+        background-position: center;
+        height: 48px;
+        width: 48px;
+        cursor: pointer;
+    }
+    .box-login {
+        width: 20em;
+        background-color: #f7f7f7;
+        padding: 3.5em 2.5em;
+        border-radius: 17px;
+        border-color: #a0a1a3;
+    }
+}
