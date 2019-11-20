@@ -7,6 +7,7 @@ function runDml($dml)
         $result = $connection->getConexion()->query($dml);
         return $result;
     } catch (PDOException $ex) {
+        echo $ex;
         return false;
     }
 }

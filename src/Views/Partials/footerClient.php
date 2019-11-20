@@ -1,5 +1,3 @@
-<hr>
-Footer
 </body>
 
 </html>
