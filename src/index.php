@@ -1,15 +1,23 @@
+<?php
+
+include './Models/models.php';
+$connection = new Connection();
+$connection->getConexion();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>FactuCyC</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FideStore</title>
+</head>
 
-    <body>
-        Hola mundo
-    </body>
+<body>
+
+</body>
 
 </html>
