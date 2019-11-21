@@ -27,6 +27,13 @@
     border-color: #a0a1a3;
 }
 
+.box-acerca {
+    background-color: #f7f7f7;
+    padding: 3.5em 2.5em;
+    border-radius: 17px;
+    border-color: #a0a1a3;
+}
+
 .nav-item-cart {
     display: none;
 }

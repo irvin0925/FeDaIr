@@ -2,7 +2,7 @@
 include './Partials/headerClient.php';
 ?>
 
-<div class="mt-2 box-center-h box-register text-accent border-solid border-w-1">
+<div class="mt-2 mb-2 box-center-h box-register text-accent border-solid border-w-1">
     <h2 class="text-center mb">Completa la informacion</h2>
     </p>
     <div class="form-group">

@@ -21,7 +21,7 @@ $session = new Session();
         <a href="http://<?= $_SERVER['HTTP_HOST']; ?>" class="nav-title">FideStore</a>
         <ul class="nav-list">
             <li class="nav-item"><a href="#" class="text-white">Productos</a></li>
-            <li class="nav-item"><a href="#" class="text-white">Acerca</a></li>
+            <li class="nav-item"><a href="http://<?= $_SERVER['HTTP_HOST']; ?>/Views/acerca.php" class="text-white">Acerca</a></li>
             <li class="nav-item nav-item-cart"><a href="#" class="text-white">Carrito</a></li>
             <li class="nav-item"><a href="
             <?php
@@ -34,8 +34,8 @@ $session = new Session();
                     if (empty($_SESSION['user'])) {
                         echo 'Inciar sesion';
                     } else {
-                        echo isAccepted($session->getUser(), $session->getPassword()) ? 'Mi cuenta' : 'Iniciar sesion'; ?></a></li>
-        <?php } ?>
+                        echo isAccepted($session->getUser(), $session->getPassword()) ? 'Mi cuenta' : 'Iniciar sesion';
+                    } ?></a></li>
         </ul>
         <div class="btn-action">
         </div>

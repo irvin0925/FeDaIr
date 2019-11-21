@@ -2,7 +2,7 @@
 include './Partials/headerClient.php';
 ?>
 
-<div class="mt-2 box-center-h box-login text-accent border-solid border-w-1">
+<div class="mt-2 mb-2 box-center-h box-login text-accent border-solid border-w-1">
     <h2 class="text-center mb">Iniciar sesion</h2>
     <div class="form-group">
         <label for="user" class="text-accent">Usuario</label>
