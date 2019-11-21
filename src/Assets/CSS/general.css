@@ -22,8 +22,12 @@
     margin-left: 1.75em;
 }
 
-.nav-item {
+.nav-item a {
     padding: 1em;
+}
+
+.nav-item {
+    /*padding: 1em;*/
     min-height: 16px;
     cursor: pointer;
 }

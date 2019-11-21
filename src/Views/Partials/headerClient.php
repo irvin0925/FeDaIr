@@ -20,16 +20,16 @@ $session = new Session();
     <nav class="nav text-white">
         <a href="http://<?= $_SERVER['HTTP_HOST']; ?>" class="nav-title">FideStore</a>
         <ul class="nav-list" id="nav-list" style="display: none;">
-            <li class="nav-item"><a href="#" class="text-white">Productos</a></li>
-            <li class="nav-item"><a href="http://<?= $_SERVER['HTTP_HOST']; ?>/Views/acerca.php" class="text-white">Acerca</a></li>
-            <li class="nav-item nav-item-cart"><a href="#" class="text-white">Carrito</a></li>
+            <li class="nav-item"><a href="#" class="d-block text-white w-100 h-100">Productos</a></li>
+            <li class="nav-item"><a href="http://<?= $_SERVER['HTTP_HOST']; ?>/Views/acerca.php" class="d-block text-white w-100 h-100">Acerca</a></li>
+            <li class="nav-item nav-item-cart"><a href="#" class="d-block text-white w-100 h-100">Carrito</a></li>
             <li class="nav-item"><a href="
             <?php
             if (empty($_SESSION['user'])) {
                 echo 'http://' . $_SERVER['HTTP_HOST'] . '/Views/login.php';
             } else {
                 echo isAccepted($session->getUser(), $session->getPassword()) ? 'http://' . $_SERVER['HTTPS_HOST'] . '/Views/micuenta.php' : 'http://' . $_SERVER['HTTPS_HOST'] . '/Views/login.php';
-            } ?>" class="text-white">
+            } ?>" class="d-block text-white w-100 h-100">
                     <?php
                     if (empty($_SESSION['user'])) {
                         echo 'Inciar sesion';
