@@ -41,8 +41,6 @@ include './Partials/headerClient.php';
     <div class="form-group">
         <input type="password" name="password_confirmation" id="password_confirmation" class="form-content d-block w-100" placeholder="Ingresa una contrasena">
     </div>
-
-
     <div class="form-group">
         <input type="button" value="Registrase" class="btn btn-primary d-block w-100 mb-0">
     </div>
