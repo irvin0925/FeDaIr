@@ -16,8 +16,8 @@ $session = new Session();
     <title>FideStore</title>
 </head>
 
-<body class="body">
-    <nav class="nav text-white position-sticky">
+<body class="body mt-7">
+    <nav class="nav text-white">
         <a href="http://<?= $_SERVER['HTTP_HOST']; ?>" class="nav-title">FideStore</a>
         <ul class="nav-list">
             <li class="nav-item"><a href="#" class="text-white">Productos</a></li>
