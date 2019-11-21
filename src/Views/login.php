@@ -23,3 +23,6 @@ include './Partials/headerClient.php';
         <p class="d-block text-accent">Aun no tienes cuenta?</p><a class="text-primary" href="http://<?= $_SERVER['HTTP_HOST']; ?>/Views/registro.php">&nbsp; Crea una</a>
     </div>
 </div>
+<?php
+include './Partials/footerClient.php';
+?>

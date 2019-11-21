@@ -19,7 +19,7 @@ $session = new Session();
 <body class="body">
     <nav class="nav text-white">
         <a href="http://<?= $_SERVER['HTTP_HOST']; ?>" class="nav-title">FideStore</a>
-        <ul class="nav-list">
+        <ul class="nav-list" id="nav-list" style="display: none;">
             <li class="nav-item"><a href="#" class="text-white">Productos</a></li>
             <li class="nav-item"><a href="http://<?= $_SERVER['HTTP_HOST']; ?>/Views/acerca.php" class="text-white">Acerca</a></li>
             <li class="nav-item nav-item-cart"><a href="#" class="text-white">Carrito</a></li>
@@ -37,6 +37,6 @@ $session = new Session();
                         echo isAccepted($session->getUser(), $session->getPassword()) ? 'Mi cuenta' : 'Iniciar sesion';
                     } ?></a></li>
         </ul>
-        <div class="btn-action">
+        <div class="btn-action" id="btn-action">
         </div>
     </nav>

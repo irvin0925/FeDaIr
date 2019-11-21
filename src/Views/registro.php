@@ -48,3 +48,7 @@ include './Partials/headerClient.php';
         <p class="text-center d-block text-accent">Ya tiene cuenta?</p><a class="text-primary" href="http://<?= $_SERVER['HTTP_HOST']; ?>/Views/login.php">&nbsp; Inicia sesion</a>
     </div>
 </div>
+
+<?php
+include './Partials/footerClient.php';
+?>

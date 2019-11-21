@@ -27,6 +27,10 @@ a {
     display: inline-block;
 }
 
+.d-none {
+    display: none;
+}
+
 .d-flex {
     display: flex;
 }
