@@ -20,6 +20,6 @@ include './Partials/headerClient.php';
         <input type="button" value="Inicia sesion" class="btn btn-success d-block w-100 mb-0">
     </div>
     <div class="form-group">
-        <p class="d-block text-accent">Aun no tienes cuenta?</p><a href="http://<?= $_SERVER['HTTP_HOST']; ?>/Views/registro.php">&nbsp; Crea una</a>
+        <p class="d-block text-accent">Aun no tienes cuenta?</p><a class="text-primary" href="http://<?= $_SERVER['HTTP_HOST']; ?>/Views/registro.php">&nbsp; Crea una</a>
     </div>
 </div>
