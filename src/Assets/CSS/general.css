@@ -36,10 +36,14 @@
     background-color: #007caa;
 }
 
+.category-item:hover {
+    background-color: #dddee0;
+}
+
 /*FOOTER*/
 
 .footer {
-    margin-top: 5em;
+    /*margin-top: 5em;*/
     height: 9.5em;
     position: inherit;
     bottom: 0;
