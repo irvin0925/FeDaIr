@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="../Assets/CSS/cycStyles.css">
+        <link rel="stylesheet" href="../Assets/CSS/general.css">
+        <link rel="stylesheet" href="../Assets/CSS/fidestore.css">
+        <title>FideStore</title>
+    </head>
+
+    <body class="body">
+        <nav class="nav text-white">
+            <a href="./productos.html" class="nav-title">FideStore</a>
+            <ul class="nav-list" id="nav-list" style="display: none;">
+                <li class="nav-item"><a href="../Views/productos.html"
+                        class="d-block text-white w-100 h-100">Productos</a></li>
+                <li class="nav-item"><a href="../Views/acerca.html" class="d-block text-white w-100 h-100">Acerca</a>
+                </li>
+                <li class="nav-item nav-item-cart"><a href="#" class="d-block text-white w-100 h-100">Carrito</a></li>
+                <li class="nav-item"><a href="#" id="user-control"
+                        class="d-block text-white w-100 h-100">Inicio/Registro/MiCuenta</a>
+                </li>
+            </ul>
+            <div class="btn-action" id="btn-action">
+            </div>
+        </nav>
+
+        <!-- CONTENT -->
+
+        <div class="mt-2 mb-2 box-center-h box-login text-accent border-solid border-w-1">
+            <h2 class="text-center mb">Iniciar sesion</h2>
+            <div class="form-group">
+                <label for="user" class="text-accent">Usuario</label>
+            </div>
+            <div class="form-group">
+                <input type="text" name="user" id="user" class="form-content d-block w-100"
+                    placeholder="Ingresa un usuario">
+            </div>
+            <div class="form-group">
+                <label for="pass" class="text-accent">Contrasena</label>
+            </div>
+            <div class="form-group">
+                <input type="password" name="pass" id="pass" class="form-content d-block w-100"
+                    placeholder="Ingresa una contrasena">
+            </div>
+            <div class="form-group">
+                <input type="button" value="Inicia sesion" class="btn btn-success d-block w-100 mb-0">
+            </div>
+            <div class="form-group">
+                <p class="d-block text-accent">Aun no tienes cuenta?</p><a class="text-primary"
+                    href="./registro.html">&nbsp; Crea una</a>
+            </div>
+        </div>
+        <!-- FOOTER -->
+        <footer class="footer text-white p-4">
+            <div class="text-center mt-1">
+                <p>FideStore@cycwebservice.cf</p>
+            </div>
+        </footer>
+
+        <script src="../Assets/JS/general.js"></script>
+    </body>
+
+</html>
