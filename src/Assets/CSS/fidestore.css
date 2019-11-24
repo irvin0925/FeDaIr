@@ -101,6 +101,11 @@
     .working-box {
         padding-left: 0;
     }
+    .products-area {
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+    }
 }
 
 @media screen and (max-width:600px) {
@@ -140,5 +145,10 @@
     }
     .working-box {
         padding-left: 0;
+    }
+    .products-area {
+        display: inline-block;
+        height: 100%;
+        width: 100%;
     }
 }

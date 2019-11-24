@@ -47,27 +47,44 @@
         }
     }
     /* Funcion general de ajax*/
-    function postAjaxRequest(url, data) {
+    function postAjaxRequest(url, data, callFunction) {
         var ajax = new XMLHttpRequest();
-        ajax.onreadystatechange(function () {
-            if (this.readyState == 4 && this.status == 200) {
-                return this.responseText;
-            }
-        });
         ajax.open('POST', url, true);
+        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        ajax.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                if (typeof callFunction === 'function') {
+                    callFunction(this.responseText);
+                } else {
+                    callFunction("Error");
+                }
+            }
+        };
         ajax.send(data);
     }
 
-    function getAjaxRequest(url, data) {
+    function getAjaxRequest(url, data, callFunction) {
         var ajax = new XMLHttpRequest();
-        ajax.onreadystatechange(function () {
-            if (this.readyState == 4 && this.status == 200) {
-                return this.responseText;
-            }
-        });
         ajax.open('GET', url + data, true);
+        ajax.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                if (typeof callFunction === 'function') {
+                    callFunction(this.responseText);
+                } else {
+                    callFunction("Error");
+                }
+            }
+        };
         ajax.send();
     }
+
+    /*Demo de llamada
+    getAjaxRequest('http://fidestore.cf/API/api.php', '?test=1', function (result) {
+        alert(result);
+    });
+    postAjaxRequest('http://fidestore.cf/API/api.php', 'test=1', function (result) {
+        alert(result);
+    });*/
 
     btnAction.addEventListener('click', function () {
         if (!responsiveDesing) {

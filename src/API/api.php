@@ -1,6 +1,11 @@
 <?php
-include '../Running/dataBaseGeneral.php';
+//include '../Running/dataBaseGeneral.php';
 
+if (isset($_GET['test'])) {
+    echo 'Funciona get ' . $_GET['test'];
+} else if (isset($_POST['test'])) {
+    echo 'Funciona post ' . $_POST['test'];
+}
 /*
 if (empty($_SESSION['user'])) {
     echo 'http://' . $_SERVER['HTTP_HOST'] . '/Views/login.php';
