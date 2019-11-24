@@ -10,8 +10,8 @@ $dataGET = $_GET;
 /* API LOGIN*/
 if (isset($dataPOST['login']) && $dataPOST['login'] == '1') {
     if (isAccepted($dataPOST['user'], $dataPOST['pass'])) {
-        echo '{ "status":1 }';
         $session->setUser($dataPOST['user'], $dataPOST['pass']);
+        echo '{ "status":1 }';
     } else {
         echo '{ "status":0 }';
     }

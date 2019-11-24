@@ -9,7 +9,7 @@
         postAjaxRequest('../API/api.php', data, function (result) {
             var json = JSON.parse(result);
             if (json.status == '1') {
-                successMessage('Has iniciado sesion ' + json.user + " and " + json.pass);
+                window.location.href = "/Views/productos.html";
             } else {
                 errorMessage('Error al iniciar sesion');
             }
