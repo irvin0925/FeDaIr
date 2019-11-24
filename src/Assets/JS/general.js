@@ -46,11 +46,19 @@ function toggle(element) {
     }
 }
 
+function removeMSG(idElement) {
+    if (document.getElementById(idElement) != undefined || document.getElementById(idElement) != null) {
+        var element = document.getElementById(idElement);
+        element.parentNode.removeChild(element);
+    }
+}
+
 function successMessage(text) {
     alert(text);
 }
 
 function errorMessage(text, parent) {
+    removeMSG('error-msg');
     var error_msg = document.createElement('div');
     var textNode = document.createTextNode(text);
     var btnExit = document.createElement('input');
@@ -58,8 +66,7 @@ function errorMessage(text, parent) {
     error_msg.setAttribute('id', 'error-msg');
     error_msg.appendChild(textNode);
     btnExit.addEventListener('click', function () {
-        var element = document.getElementById('error-msg');
-        element.parentNode.removeChild(element);
+        removeMSG('error-msg');
     });
     btnExit.setAttribute('class', 'error-msg-btn');
     btnExit.setAttribute('value', 'X');

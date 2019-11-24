@@ -126,6 +126,22 @@
         height: 100%;
         width: 100%;
     }
+    .error-msg {
+        width: 95%;
+        background-color: #e325268f;
+        color: white;
+        margin: 0 auto;
+        font-size: 16px;
+    }
+    .error-msg-btn {
+        border: none;
+        background-color: transparent;
+        color: white;
+        float: right;
+        padding-top: -1em;
+        cursor: pointer;
+        font-size: 16px;
+    }
 }
 
 @media screen and (max-width:600px) {
@@ -170,5 +186,21 @@
         display: inline-block;
         height: 100%;
         width: 100%;
+    }
+    .error-msg {
+        width: 95%;
+        background-color: #e325268f;
+        color: white;
+        margin: 0 auto;
+        font-size: 10px;
+    }
+    .error-msg-btn {
+        border: none;
+        background-color: transparent;
+        color: white;
+        float: right;
+        padding-top: -1em;
+        cursor: pointer;
+        font-size: 10px;
     }
 }
