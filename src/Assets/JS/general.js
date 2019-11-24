@@ -51,7 +51,7 @@
         var ajax = new XMLHttpRequest();
         ajax.onreadystatechange(function () {
             if (this.readyState == 4 && this.status == 200) {
-                return this.response;
+                return this.responseText;
             }
         });
         ajax.open('POST', url, true);
