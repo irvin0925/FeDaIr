@@ -70,7 +70,6 @@
 }
 
 .products-area {
-    display: inline-block;
     height: 100%;
     width: calc(100% - 20em);
     float: right;
