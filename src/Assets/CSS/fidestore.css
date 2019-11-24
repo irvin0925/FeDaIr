@@ -76,6 +76,26 @@
     float: right;
 }
 
+/* MSG */
+
+.error-msg {
+    width: 95%;
+    background-color: #e325268f;
+    color: white;
+    margin: 0 auto;
+    font-size: 20px;
+}
+
+.error-msg-btn {
+    border: none;
+    background-color: transparent;
+    color: white;
+    float: right;
+    padding-top: -1em;
+    cursor: pointer;
+    font-size: 20px;
+}
+
 @media screen and (max-width:1100px) {
     .btn-action {
         position: absolute;

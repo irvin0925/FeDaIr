@@ -50,8 +50,22 @@ function successMessage(text) {
     alert(text);
 }
 
-function errorMessage(text) {
-    alert(text);
+function errorMessage(text, parent) {
+    var error_msg = document.createElement('div');
+    var textNode = document.createTextNode(text);
+    var btnExit = document.createElement('input');
+    error_msg.setAttribute('class', 'error-msg border-r-8 p-1');
+    error_msg.setAttribute('id', 'error-msg');
+    error_msg.appendChild(textNode);
+    btnExit.addEventListener('click', function () {
+        var element = document.getElementById('error-msg');
+        element.parentNode.removeChild(element);
+    });
+    btnExit.setAttribute('class', 'error-msg-btn');
+    btnExit.setAttribute('value', 'X');
+    btnExit.setAttribute('type', 'button');
+    error_msg.appendChild(btnExit);
+    parent.insertBefore(error_msg, parent.childNodes[0]);
 }
 
 /* Funcion general de ajax*/
