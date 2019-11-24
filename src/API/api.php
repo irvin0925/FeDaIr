@@ -1,11 +1,23 @@
 <?php
-//include '../Running/dataBaseGeneral.php';
+include '../Models/models.php';
+include '../Running/dataBaseGeneral.php';
+include '../Running/generalFunction.php';
+$connection = new Connection();
+$session = new Session();
+$dataPOST = $_POST;
+$dataGET = $_GET;
 
-if (isset($_GET['test'])) {
-    echo 'Funciona get ' . $_GET['test'];
-} else if (isset($_POST['test'])) {
-    echo 'Funciona post ' . $_POST['test'];
+/* API LOGIN*/
+if (isset($dataPOST['login']) && $dataPOST['login'] == '1') {
+    if (isAccepted($dataPOST['user'], $dataPOST['pass'])) {
+        echo '{ "status":1 }';
+        $session->setUser($dataPOST['user'], $dataPOST['pass']);
+    } else {
+        echo '{ "status":0 }';
+    }
 }
+
+
 /*
 if (empty($_SESSION['user'])) {
     echo 'http://' . $_SERVER['HTTP_HOST'] . '/Views/login.php';

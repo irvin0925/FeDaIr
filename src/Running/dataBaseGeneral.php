@@ -18,7 +18,7 @@ function getData($sql)
     global $connection;
     try {
         $result = $connection->getConexion()->query($sql);
-        if ($result->num_rows > 0) {
+        if ($result != null && $result->num_rows > 0) {
             return $result;
         }
     } catch (PDOException $ex) {
