@@ -46,6 +46,28 @@
             }, 5);
         }
     }
+    /* Funcion general de ajax*/
+    function postAjaxRequest(url, data) {
+        var ajax = new XMLHttpRequest();
+        ajax.onreadystatechange(function () {
+            if (this.readyState == 4 && this.status == 200) {
+                return this.response;
+            }
+        });
+        ajax.open('POST', url, true);
+        ajax.send(data);
+    }
+
+    function getAjaxRequest(url, data) {
+        var ajax = new XMLHttpRequest();
+        ajax.onreadystatechange(function () {
+            if (this.readyState == 4 && this.status == 200) {
+                return this.responseText;
+            }
+        });
+        ajax.open('GET', url + data, true);
+        ajax.send();
+    }
 
     btnAction.addEventListener('click', function () {
         if (!responsiveDesing) {
