@@ -103,8 +103,7 @@
 }
 
 .products-area::after {
-    content: "";
-    justify-items: baseline;
+    justify-items: baseline baseline;
 }
 
 /* MSG */
