@@ -37,13 +37,18 @@
 }
 
 .category-item:hover {
-    background-color: #dddee0;
+    background-color: #333;
+    color: #fff;
+}
+
+.category-item:active {
+    background-color: #007caa;
+    color: #fff;
 }
 
 /*FOOTER*/
 
 .footer {
-    /*margin-top: 5em;*/
     height: 9.5em;
     position: inherit;
     bottom: 0;
@@ -72,6 +77,10 @@
         background-color: #008cba;
         box-shadow: 1px 1px 3px #000;
     }
+    .category-item:active {
+        background-color: #007caa;
+        color: #fff;
+    }
 }
 
 /*Celular*/
@@ -90,5 +99,9 @@
         height: auto;
         background-color: #008cba;
         box-shadow: 1px 1px 3px #000;
+    }
+    .category-item:active {
+        background-color: #007caa;
+        color: #fff;
     }
 }
