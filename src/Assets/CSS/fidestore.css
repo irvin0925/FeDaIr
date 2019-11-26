@@ -99,12 +99,12 @@
     border-right: none;
     border-left-style: solid;
     border-left-width: 1px;
+    overflow: hidden;
 }
 
 .products-area::after {
     content: "";
-    flex: auto;
-    justify-content: space-around;
+    justify-items: baseline;
 }
 
 /* MSG */
@@ -140,6 +140,12 @@
     }
     .nav-item-cart {
         display: block;
+    }
+    .box-productos {
+        background-color: #fff;
+        padding: 3.5em .5em;
+        border-color: #a0a1a3;
+        box-shadow: inset 1px -1px 7px #000;
     }
     .category-box {
         position: initial;
