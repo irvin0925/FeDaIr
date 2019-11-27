@@ -45,16 +45,17 @@
                 <div class="category-box">
                     <div class="mt-1 border-r-solid d-block">
                         <div class="form-group">
-                            <input type="text" placeholder="Busca algo" class="w-100 d-block form-content">
+                            <input id="filterCategories" type="text" placeholder="Busca alguna categoria"
+                                class="w-100 d-block form-content">
                         </div>
-                        <ul class="d-block category-nav">
-                            <li class="category-item p-1">Categoria 1</li>
-                            <li class="category-item p-1">Categoria 2</li>
-                            <li class="category-item p-1">Categoria 3</li>
-                            <li class="category-item p-1">Categoria 4</li>
-                            <li class="category-item p-1">Categoria 5</li>
-                            <li class="category-item p-1">Categoria 6</li>
-                            <li class="category-item p-1">Categoria 7</li>
+                        <ul class="d-block category-nav" id="categories-list">
+                            <!-- CATEGORY EXMPLE -->
+                            <li class="category-item pl-2 pt-1 pb-1" style="
+                            background-image: url(/Assets/IMG/check.png);
+                            background-repeat: no-repeat;
+                                        background-size: 25px 25px;
+                                        background-position: 95%;">Categoria 1</li>
+                            <!-- END CATEGORY EXMPLE -->
                         </ul>
                     </div>
                 </div>

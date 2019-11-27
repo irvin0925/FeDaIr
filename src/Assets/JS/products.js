@@ -2,7 +2,17 @@
     'use-strict';
 
     var listaProducts = document.getElementById('products-list');
-    var filter = document.getElementById('filterProducts');
+    var listaCategories = document.getElementById('categories-list');
+    var filterProducts = document.getElementById('filterProducts');
+    var filterCategories = document.getElementById('filterCategories');
+
+    function newProductDescription(descripcion) {
+        var max = 50;
+        if (descripcion.length > max) {
+            descripcion = descripcion.substring(0, max) + "...";
+        }
+        return descripcion;
+    }
 
     function newProduct(data) {
         var liProducto = newDOM('li');
@@ -19,7 +29,8 @@
         title.appendChild(newTextNode(data.nombre));
         divBody.appendChild(title);
         text.setAttribute('class', 'mt-1 pl-1 pr-1');
-        text.appendChild(newTextNode(data.descripcion));
+        /* Hacer la corroboracion de caracteres*/
+        text.appendChild(newTextNode(newProductDescription(data.descripcion)));
         divBody.appendChild(text);
         var divAction = newDOM('div'),
             divStatSee = newDOM('div'),
@@ -43,18 +54,55 @@
         return liProducto;
     }
 
-    function listProducts() {
-        postAjaxRequest('../API/api.php', 'product=1&filter=' + filter.value, function (json) {
+    function listProducts(filterValue) {
+        postAjaxRequest('../API/api.php', 'product=1&filter=' + filterValue, function (json) {
             if (json != 'Error') {
                 json = JSON.parse(json);
+                resetListProducts();
                 for (i = 0; i < json.length; i++) {
                     var product = newProduct(json[i]);
-                    console.log(product);
                     listaProducts.insertBefore(product, listaProducts.childNodes[0]);
                 }
             }
         });
     }
 
-    listProducts();
+    function resetListProducts() {
+        listaProducts.innerHTML = '<li class="product-item-list"></li><li class="product-item-list" ></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li>';
+    }
+
+    function resetListCategory() {
+        //listaCategories.innerHTML = '';
+    }
+
+    function newCategory(data) {
+        var liCategory = newDOM('li');
+        liCategory.setAttribute('class', 'category-item pl-2 pt-1 pb-1');
+        liCategory.appendChild(newTextNode(data.descripcion));
+        return liCategory;
+    }
+
+    function listCategories(filter) {
+        postAjaxRequest('../API/api.php', 'category=1&filter=' + filter, function (json) {
+            if (json != 'Error') {
+                json = JSON.parse(json);
+                resetListCategory();
+                for (i = 0; i < json.length; i++) {
+                    var category = newCategory(json[i]);
+                    listaCategories.appendChild(category);
+                }
+            }
+        });
+    }
+
+    listProducts(filterProducts.value);
+    listCategories(filterCategories.value);
+
+    filterProducts.addEventListener('keyup', function () {
+        listProducts(this.value);
+    });
+
+    filterCategories.addEventListener('keyup', function () {
+        listCategories(this.value);
+    });
 })();

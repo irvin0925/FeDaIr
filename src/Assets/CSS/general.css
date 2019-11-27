@@ -36,6 +36,10 @@
     background-color: #007caa;
 }
 
+.category-item {
+    border-bottom: solid 1px #ccc;
+}
+
 .category-item:hover {
     background-color: #333;
     color: #fff;

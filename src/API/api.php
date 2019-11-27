@@ -19,4 +19,6 @@ if (isset($dataPOST['login']) && $dataPOST['login'] == '1') {
     if ($dataPOST['product'] == '1') {
         echo showProducts($dataPOST['filter']);
     }
+} else if (isset($dataPOST['category']) && $dataPOST['category'] == '1') {
+    echo showCategories($dataPOST['filter']);
 }
