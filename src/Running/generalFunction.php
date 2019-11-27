@@ -1,5 +1,6 @@
 <?php
 
+/* Login */
 function isAccepted($usu, $pass)
 {
     try {
@@ -15,5 +16,26 @@ function isAccepted($usu, $pass)
         return false;
     } catch (PDOException $ex) {
         return false;
+    }
+}
+
+/* Productos */
+function showProducts($filter)
+{
+    try {
+        $sql = "select * from Producto where" .
+            " nombre like '%" . $filter .
+            "%' or descripcion like '%" . $filter .
+            "%' or precio like '%" . $filter . "%'";
+        $result = getData($sql);
+        $json = [];
+        if ($result != null && $result->num_rows > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $json[] = $row;
+            }
+        }
+        return json_encode($json);
+    } catch (PDOException $ex) {
+        return "false";
     }
 }

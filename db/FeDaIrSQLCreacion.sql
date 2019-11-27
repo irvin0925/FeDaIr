@@ -1,11 +1,22 @@
 create schema FeDaIr;
 use FeDaIr;
 
+/* Drop area */
+drop table if exists FacturaDetalle;
+drop table if exists FacturaEncabezado;
+drop table if exists FormaPago;
+drop table if exists Carrito;
+drop table if exists Producto;
+drop table if exists CategoriaProducto;
+drop table if exists Perfil_Menu;
+drop table if exists Usuario;
+drop table if exists Perfil;
+
 /*
 	Usuario
     Menu (Apartados)
     Perfil (Rol)
-    Menu-Perfil (Permisos)
+    Perfil-Menu (Permisos)
     -------------------------------------------------------------
     CategoriaProducto
     Producto
@@ -56,6 +67,8 @@ create table CategoriaProducto(
 create table Producto(
 	idProducto int primary key auto_increment,
     nombre varchar(75),
+    descripcion varchar(150),
+    -- Se tiene que correr de nuevo
     precio decimal(12,2) not null,
     cantidadDisponible int,
     cantCompras int,
@@ -103,3 +116,11 @@ create table FacturaDetalle(
     idProducto int not null,
     constraint idProducto_FacturaDetalle_fk foreign key(idProducto) references Producto(idProducto)
 );
+
+insert into categoriaproducto (descripcion) values 
+('Tecnologico'),('Hogar'),('Comida'),('Tecnologico'),('Comunicacion');
+
+
+insert into producto (nombre,descripcion,precio,cantidadDisponible,cantCompras,urlImg,idCategoriaProducto) 
+value ('Computadora','Computadora todo en 1, monitor y componentes',450000,5,0,'temp_pc.png',1);
+

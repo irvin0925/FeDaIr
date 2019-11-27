@@ -94,7 +94,7 @@ function postAjaxRequest(url, data, callFunction) {
 
 function getAjaxRequest(url, data, callFunction) {
     var ajax = new XMLHttpRequest();
-    ajax.open('GET', url + data, true);
+    ajax.open('GET', url + '?' + data, true);
     ajax.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             if (typeof callFunction === 'function') {
@@ -105,6 +105,14 @@ function getAjaxRequest(url, data, callFunction) {
         }
     };
     ajax.send();
+}
+
+function newDOM(type) {
+    return document.createElement(type);
+}
+
+function newTextNode(text) {
+    return document.createTextNode(text);
 }
 
 /*Demo de llamada

@@ -17,9 +17,6 @@
 }
 
 .carta-image {
-    background: url(../IMG/temp_pc.png) no-repeat;
-    background-size: contain;
-    background-position: center center;
     width: 100%;
     height: 210px;
     display: inline-block;
