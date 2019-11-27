@@ -24,9 +24,9 @@ function showProducts($filter)
 {
     try {
         $sql = "select * from Producto where" .
-            " nombre like '%" . $filter . "%'
-             or descripcion like '%upper(" . $filter .
-            ")' or precio like '%" . $filter . "%'";
+            " (nombre like '%" . $filter['filter'] . "%'
+             or descripcion like '%" . $filter['filter'] .
+            "%' or precio like '%" . $filter['filter'] . "%') " . $filter['category'];
         $result = getData($sql);
         $json = [];
         if ($result != null && $result->num_rows > 0) {

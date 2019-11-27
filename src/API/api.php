@@ -17,7 +17,20 @@ if (isset($dataPOST['login']) && $dataPOST['login'] == '1') {
     }
 } else if (isset($dataPOST['product'])) {
     if ($dataPOST['product'] == '1') {
-        echo showProducts($dataPOST['filter']);
+        $filter = ['filter' => $dataPOST['filter'], 'category' => ''];
+        echo showProducts($filter);
+    } else if ($dataPOST['product'] == '2') {
+        $category = ' and (';
+        for ($i = 0; $i < $dataPOST['cant']; $i++) {
+            if ($category == ' and (') {
+                $category .= 'idCategoriaProducto = ' . $dataPOST['category' . $i];
+            } else {
+                $category .= ' or idCategoriaProducto = ' . $dataPOST['category' . $i];
+            }
+        }
+        $category .= ')';
+        $filter = ['filter' => $dataPOST['filter'], 'category' => $category];
+        echo showProducts($filter);
     }
 } else if (isset($dataPOST['category']) && $dataPOST['category'] == '1') {
     echo showCategories($dataPOST['filter']);
