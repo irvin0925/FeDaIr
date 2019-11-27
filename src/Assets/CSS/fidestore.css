@@ -86,12 +86,12 @@
 
 .category-box {
     display: inline-block;
-    width: 20em;
+    width: 17em;
 }
 
 .products-area {
     height: 100%;
-    width: calc(100% - 20em);
+    width: calc(100% - 17em);
     float: right;
     display: block;
     border-right: none;
