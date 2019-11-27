@@ -93,17 +93,11 @@
     height: 100%;
     width: calc(100% - 20em);
     float: right;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
+    display: block;
     border-right: none;
     border-left-style: solid;
     border-left-width: 1px;
     overflow: hidden;
-}
-
-.products-area::after {
-    justify-items: baseline baseline;
 }
 
 /* MSG */
@@ -158,7 +152,6 @@
         display: inline-block;
         height: 100%;
         width: 100%;
-        display: flex;
         border-left: none;
         border-top-style: solid;
         border-top-width: 1px;
@@ -230,9 +223,8 @@
     }
     .products-area {
         display: inline-block;
-        height: 100%;
+        height: auto;
         width: 100%;
-        display: flex;
         border-left: none;
         border-top-style: solid;
         border-top-width: 1px;
