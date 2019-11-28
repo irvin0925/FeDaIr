@@ -79,8 +79,13 @@
         controlProduct(divStatSee, data);
         divAction.appendChild(divStatSee);
         divStatAdd.setAttribute('class', 'stat stat-add');
-        divStatAdd.setAttribute('name', data.onCart == '0' ? 'agregar-carro' : 'actualizar-carrito');
-        divStatAdd.appendChild(newTextNode(data.onCart == '0' ? 'Agregar a la compra' : 'Actualizar carrito'));
+        if (data.onCart === undefined || data.onCart == '0') {
+            divStatAdd.setAttribute('name', 'agregar-carro');
+            divStatAdd.appendChild(newTextNode('Agregar a la compra'));
+        } else {
+            divStatAdd.setAttribute('name', 'actualizar-carrito');
+            divStatAdd.appendChild(newTextNode('Actualizar carrito'));
+        }
         controlProduct(divStatAdd, data);
         divAction.appendChild(divStatAdd);
         // Incluir todo al hijo mayor y luego al padre
@@ -152,7 +157,7 @@
                     }
                 });
             } else {
-                alert('Actualizar carrito');
+                cartRedirect();
             }
         });
     }

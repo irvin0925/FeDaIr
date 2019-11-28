@@ -11,8 +11,7 @@
         <link rel="stylesheet" href="../Assets/CSS/msgAdvice.css">
         <title>FideStore</title>
         <!-- OWN CSS -->
-        <link rel="stylesheet" href="../Assets/CSS/productos.css">
-        <link rel="stylesheet" href="../Assets/CSS/productos2.css">
+        <link rel="stylesheet" href="../Assets/CSS/carrito.css">
     </head>
 
     <body class="body" id="body">
@@ -23,7 +22,8 @@
                         class="d-block text-white w-100 h-100">Productos</a></li>
                 <li class="nav-item"><a href="../Views/acerca.html" class="d-block text-white w-100 h-100">Acerca</a>
                 </li>
-                <li class="nav-item nav-item-cart"><a href="#" class="d-block text-white w-100 h-100">Carrito</a></li>
+                <li class="nav-item nav-item-cart"><a id="cart" href="#"
+                        class="d-block text-white w-100 h-100">Carrito</a></li>
                 <li class="nav-item"><a href="../Views/login.html" id="user-control"
                         class="d-block text-white w-100 h-100">Inicio/Registro/MiCuenta</a>
                 </li>
@@ -36,7 +36,48 @@
         </nav>
 
         <!-- CONTENT -->
-        Carrito
+        <div class="box-carrito">
+            <h3>Resumen</h3>
+            <hr>
+            <div class="mb cart-resumen">
+                <div class="cart-item p-1 mb">
+                    <div class="cart-item-delete"></div>
+                    <div class="cart-item-img"
+                        style="background: url(/Assets/IMG/temp_pc.png) no-repeat;background-size: contain;background-position: center center;">
+                    </div>
+                    <p class="cart-item-name">Computadora todo en 1, monitor y componentes </p>
+                    <div class="cart-item-cant-control">
+                        <div class="cart-item-cant-control-less p-2"></div>
+                        <div class="cart-item-cant-control-value">1</div>
+                        <div class="cart-item-cant-control-plus p-2"></div>
+                    </div>
+                    <div class="cart-item-price">1234567890.12</div>
+                </div>
+                <div class="cart-item p-1 mb">
+                    <div class="cart-item-delete"></div>
+                    <div class="cart-item-img"
+                        style="background: url(/Assets/IMG/temp_pc.png) no-repeat;background-size: contain;background-position: center center;">
+                    </div>
+                    <p class="cart-item-name">Computadora todo en 1, monitor y componentes </p>
+                    <div class="cart-item-cant-control">
+                        <div class="cart-item-cant-control-less p-2"></div>
+                        <div class="cart-item-cant-control-value">1</div>
+                        <div class="cart-item-cant-control-plus p-2"></div>
+                    </div>
+                    <div class="cart-item-price">1234567890.12</div>
+                </div>
+            </div>
+            <h3>Metodo de pago</h3>
+            <hr>
+            <div class="cart-confirm mt-1">
+                Comprar
+            </div>
+            <h3>Confirma tu compra</h3>
+            <hr>
+            <div class="cart-purchase mt-1">
+                Comprar
+            </div>
+        </div>
         <!-- FOOTER -->
 
         <footer class="footer text-white p-4">
@@ -46,7 +87,6 @@
         </footer>
 
         <script src="../Assets/JS/general.js"></script>
-        <script src="../Assets/JS/products.js"></script>
     </body>
 
 </html>

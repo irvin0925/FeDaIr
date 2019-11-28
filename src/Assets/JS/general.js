@@ -1,9 +1,7 @@
 "use stric";
 var screenWidth = screen.width, responsiveDesing = screenWidth > 1100, change = responsiveDesing;
-var btnAction = document.getElementById('btn-action');
-var navList = document.getElementById('nav-list');
-var apiURL = '../API/api.php';
 
+//Funciones generales para todos los documentos
 function init() {
     screenWidth = screen.width;
     responsiveDesing = screenWidth > 1100;
@@ -15,10 +13,6 @@ function init() {
         navList.style.display = 'none';
     }
 };
-
-function insertAfter(newNode, referenceNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-}
 
 function toggle(element) {
     //Hace que el elemento se oculte con animacion
@@ -57,16 +51,6 @@ function removeMSG(idElement) {
         element.parentNode.removeChild(element);
     }
 }
-
-/*<div class="dialog-error-back position-relative d-none" id="dialog-error">
-    <div class="dialog-error box-center-fixed position-relative">
-        <div class="dialog-error-header"></div>
-        <h3 class="dialog-error-msg">Error!</h3>
-        <div class="dialog-error-actions">
-            <input type="button" value="Aceptar" class="btn btn-danger dialog-error-btn-accept">
-        </div>
-    </div>
-</div>  */
 
 function dialogError(text) {
     var body = document.getElementById('body');
@@ -200,6 +184,12 @@ function newTextNode(text) {
     return document.createTextNode(text);
 }
 
+//Funciones de FIDESTORE
+var btnAction = document.getElementById('btn-action'),
+    navList = document.getElementById('nav-list'),
+    apiURL = '../API/api.php',
+    ulCart = document.getElementById('cart');
+
 function accepted(cb) {
     postAjaxRequest(apiURL, 'login=2', function (json) {
         if (json != 'Error') {
@@ -225,12 +215,31 @@ function loginRedirect() {
     window.location.href = "/Views/login.html";
 }
 
+function indexRedirect() {
+    window.location.href = "/Views/productos.html";
+}
+
+function cartRedirect() {
+    accepted(function (result) {
+        if (result) {
+            window.location.href = "/Views/carrito.html";
+        } else {
+            loginRedirect();
+        }
+    });
+}
+
 btnAction.addEventListener('click', function () {
     if (!responsiveDesing) {
         toggle(navList);
     } else {
-        alert('Carrito');
+        cartRedirect();
     }
 });
+
+ulCart.addEventListener('click', function () {
+    cartRedirect();
+});
+
 
 setInterval(init, 10);

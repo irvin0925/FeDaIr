@@ -59,5 +59,7 @@ if (isset($dataPOST['login'])) {
         }
         //addCart=1&idProducto=
 
-    } else { }
+    }
+} else {
+    $session->closeSession();
 }
