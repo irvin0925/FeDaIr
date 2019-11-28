@@ -119,11 +119,24 @@ create table FacturaDetalle(
 
 insert into categoriaproducto (descripcion) values 
 ('Tecnologico'),('Hogar'),('Comida'),('Tecnologico'),('Comunicacion');
+update categoriaproducto set descripcion = 'Electronico' where idCategoriaProducto = 4;
 
 
 insert into producto (nombre,descripcion,precio,cantidadDisponible,cantCompras,urlImg,idCategoriaProducto) 
 value ('Computadora','Computadora todo en 1, monitor y componentes',450000,5,0,'temp_pc.png',1);
 insert into producto (nombre,descripcion,precio,cantidadDisponible,cantCompras,urlImg,idCategoriaProducto) 
-value ('Bagels','Disfruta de los exquisitos bagels, crujientes',450000,5,0,'temp_bagel.png',3);
+value ('Bagels','Disfruta de los exquisitos bagels, crujientes',5500,5,0,'temp_bagel.png',3);
 
-select * from producto;
+desc producto;
+
+select * from Producto where (nombre like '%%'
+             or descripcion like '%%' or precio like '%%')  and (idCategoriaProducto = 3 or idCategoriaProducto = 2);
+             
+insert into Perfil (nombre) values ('usuario');
+insert into usuario (cedula,nombre,usuario,contra,telefono,idPerfil) 
+values ('305230724','Daniel Coto Quiros','danielCQgt4',md5('1234'),'61963428',1);
+
+select count(*) as valido,idUsuario from Usuario where usuario = 'danielCQgt4' and contra = md5('1234') group by idUsuario;
+
+delete from carrito where idLineaCarrito > 0;
+alter table carrito auto_increment = 1;

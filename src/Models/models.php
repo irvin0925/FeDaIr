@@ -12,7 +12,7 @@ class Connection
 
     public function Connection()
     {
-        $this->host = ['host' => '25.18.99.248', 'dbname' => 'fedair'];
+        $this->host = ['host' => 'sql308.epizy.com', 'dbname' => 'fedair'];
         $this->usu = 'fedair';
         $this->pass = 'Fedair2019*';
         $this->url = 'mysql:host=' . $this->host['host'] . ';dbname=' . $this->host['dbname'];
@@ -75,7 +75,6 @@ class Connection
     }
 }
 
-
 /* Manejo de sesiones por medio de una clase*/
 class Session
 {
@@ -93,6 +92,11 @@ class Session
     public function getHost()
     {
         return $this->host;
+    }
+
+    public function setIdUser($idUser)
+    {
+        $_SESSION['idUser'] = $idUser;
     }
 
     public function setUser($pass, $usu)
@@ -149,6 +153,11 @@ class Session
     public function getSuccess()
     {
         return $_SESSION['success'];
+    }
+
+    public function getIdUser()
+    {
+        return $_SESSION['idUser'];
     }
 
     public function getUser()

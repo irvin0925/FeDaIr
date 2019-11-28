@@ -1,6 +1,8 @@
 (function () {
     'use-strict';
 
+    //Local data
+    var productShowing = [];
     // Componentes de html
     var listaProducts = document.getElementById('products-list');
     var listaCategories = document.getElementById('categories-list');
@@ -10,6 +12,36 @@
     var categoriesFiler = [];
     var styleSelectedCategorie = 'background-image: url(/Assets/IMG/check.png);background-repeat: no-repeat;background-size: 25px 25px;background-position: 95%;';
 
+    //Resetear datos
+    function resetListProducts() {
+        listaProducts.innerHTML = '<li class="product-item-list"></li><li class="product-item-list" ></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li>';
+    }
+
+    function resetListCategory() {
+        listaCategories.innerHTML = '';
+    }
+
+    //New DOM
+    function newCategory(data) {
+        var liCategory = newDOM('li');
+        liCategory.setAttribute('class', 'category-item pl-2 pt-1 pb-1');
+        liCategory.setAttribute('id', data.idCategoriaProducto);
+        if (categoriesFiler.includes(data.idCategoriaProducto)) {
+            liCategory.style = styleSelectedCategorie;
+        }
+        liCategory.appendChild(newTextNode(data.descripcion));
+        liCategory.addEventListener('click', function () {
+            if (categoriesFiler.includes(this.id)) {
+                categoriesFiler.splice(categoriesFiler.indexOf(this.id), 1);
+                this.style = '';
+            } else {
+                categoriesFiler.push(this.id);
+                this.style = styleSelectedCategorie;
+            }
+            listComposeProducts();
+        });
+        return liCategory;
+    }
 
     function newProductDescription(descripcion) {
         var max = 50;
@@ -39,17 +71,17 @@
         divBody.appendChild(text);
         var divAction = newDOM('div'),
             divStatSee = newDOM('div'),
-            divTextSee = newDOM('div'),
-            divStatAdd = newDOM('div'),
-            divTextAdd = newDOM('div');
+            divStatAdd = newDOM('div');
         divAction.setAttribute('class', 'card-stats mt-1'); // as parent
         divStatSee.setAttribute('class', 'stat stat-see');
-        divTextSee.appendChild(newTextNode('Ver mas'));
-        divStatSee.appendChild(divTextSee);
+        divStatSee.setAttribute('name', 'ver-mas');
+        divStatSee.appendChild(newTextNode('Ver mas'));
+        controlProduct(divStatSee, data);
         divAction.appendChild(divStatSee);
         divStatAdd.setAttribute('class', 'stat stat-add');
-        divTextAdd.appendChild(newTextNode('Agregar a la compra'));
-        divStatAdd.appendChild(divTextAdd);
+        divStatAdd.setAttribute('name', data.onCart == '0' ? 'agregar-carro' : 'actualizar-carrito');
+        divStatAdd.appendChild(newTextNode(data.onCart == '0' ? 'Agregar a la compra' : 'Actualizar carrito'));
+        controlProduct(divStatAdd, data);
         divAction.appendChild(divStatAdd);
         // Incluir todo al hijo mayor y luego al padre
         divCarta.appendChild(divIMG);
@@ -59,51 +91,24 @@
         return liProducto;
     }
 
+    //Mostrar informacion
     function listProducts(filterValue) {
-        postAjaxRequest('../API/api.php', filterValue, function (json) {
-            console.log(json);
+        postAjaxRequest(apiURL, filterValue, function (json) {
             if (json != 'Error') {
                 json = JSON.parse(json);
+                productShowing.length = 0;
                 resetListProducts();
                 for (i = 0; i < json.length; i++) {
                     var product = newProduct(json[i]);
+                    productShowing.push(json[i]);
                     listaProducts.insertBefore(product, listaProducts.childNodes[0]);
                 }
             }
         });
     }
 
-    function resetListProducts() {
-        listaProducts.innerHTML = '<li class="product-item-list"></li><li class="product-item-list" ></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li><li class="product-item-list"></li>';
-    }
-
-    function resetListCategory() {
-        listaCategories.innerHTML = '';
-    }
-
-    function newCategory(data) {
-        var liCategory = newDOM('li');
-        liCategory.setAttribute('class', 'category-item pl-2 pt-1 pb-1');
-        liCategory.setAttribute('id', data.idCategoriaProducto);
-        if (categoriesFiler.includes(data.idCategoriaProducto)) {
-            liCategory.style = styleSelectedCategorie;
-        }
-        liCategory.appendChild(newTextNode(data.descripcion));
-        liCategory.addEventListener('click', function () {
-            if (categoriesFiler.includes(this.id)) {
-                categoriesFiler.splice(categoriesFiler.indexOf(this.id), 1);
-                this.style = '';
-            } else {
-                categoriesFiler.push(this.id);
-                this.style = styleSelectedCategorie;
-            }
-            listComposeProducts();
-        });
-        return liCategory;
-    }
-
     function listCategories(filterValue) {
-        postAjaxRequest('../API/api.php', filterValue, function (json) {
+        postAjaxRequest(apiURL, filterValue, function (json) {
             if (json != 'Error') {
                 json = JSON.parse(json);
                 resetListCategory();
@@ -127,7 +132,42 @@
         }
     }
 
-    listProducts('product=1&filter=' + filterProducts.value);
+    //Controlar la informacion
+    function controlProduct(element, data) {
+        element.addEventListener('click', function (e) {
+            var name = e.target.attributes.name.value;
+            if (name == 'ver-mas') {
+                alert(data.idProducto + ' ver mas');
+            } else if (name == 'agregar-carro') {
+                accepted(function (json) {
+                    if (json) {
+                        agregarAlCarrito(data, function (result) {
+                            if (result) {
+                                element.innerHTML = "Actualizar carrito";
+                                element.setAttribute('name', 'actualizar-carrito');
+                            } else {
+                                dialogError('Error al agregar');
+                            }
+                        });
+                    }
+                });
+            } else {
+                alert('Actualizar carrito');
+            }
+        });
+    }
+
+    function agregarAlCarrito(data, cb) {
+        postAjaxRequest(apiURL, 'addCart=1&cant=1&idProduct=' + data.idProducto, function (json) {
+            if (json != 'Error') {
+                json = JSON.parse(json);
+                cb(json.add == '1');
+            }
+        });
+    }
+
+    /* Llamado de funciones */
+    listComposeProducts();
     listCategories('category=1&filter=' + filterCategories.value);
 
     filterProducts.addEventListener('keyup', function () {
