@@ -59,6 +59,7 @@
                 calcularCantidad({ name: "btn-less", idProduct: data.idProducto }, function (json) {
                     if (json.error == 0) {
                         value.innerHTML = '';
+                        var msg = dialogWait('Espere un momento...');
                         value.appendChild(newTextNode(json.cant));
                         items = items.map(obj => {
                             if (obj.idProducto != data.idProducto) {
@@ -69,6 +70,7 @@
                             }
                         });
                         calcularValores();
+                        removeMSG(msg.id);
                     } else {
                         dialogError(json.msg);
                     }
@@ -83,6 +85,7 @@
             calcularCantidad({ name: "btn-plus", idProduct: data.idProducto }, function (json) {
                 if (json.error == 0) {
                     value.innerHTML = '';
+                    var msg = dialogWait('Espere un momento...');
                     value.appendChild(newTextNode(json.cant));
                     items = items.map(obj => {
                         if (obj.idProducto != data.idProducto) {
@@ -93,6 +96,7 @@
                         }
                     });
                     calcularValores();
+                    removeMSG(msg.id);
                 } else {
                     dialogError(json.msg);
                 }

@@ -66,6 +66,29 @@ function removeMSG(idElement) {
     }
 }
 
+function dialogWait(text) {
+    var body = document.getElementById('body');
+    var divBG = newDOM('div');
+    divBG.setAttribute('class', 'dialog-error-back position-relative');
+    divBG.setAttribute('id', 'dialog-wait');
+    var divDialog = newDOM('div');
+    divDialog.setAttribute('class', 'dialog-error box-center-fixed position-relative');
+    var divHeader = newDOM('div');
+    divHeader.setAttribute('class', 'dialog-error-header');
+    var title = newDOM('h5');
+    title.setAttribute('class', 'dialog-error-msg');
+    title.appendChild(newTextNode(text));
+    var divAction = newDOM('div');
+    divAction.setAttribute('class', 'dialog-error-actions');
+    divDialog.appendChild(divHeader);
+    divDialog.appendChild(title);
+    divDialog.appendChild(divAction);
+    divBG.appendChild(divDialog);
+
+    body.appendChild(divBG);
+    return divBG;
+}
+
 function dialogError(text) {
     var body = document.getElementById('body');
     var divBG = newDOM('div');
@@ -95,6 +118,7 @@ function dialogError(text) {
     divBG.appendChild(divDialog);
 
     body.appendChild(divBG);
+    return divBG;
 }
 
 function dialogConfirm(text, cb) {
@@ -273,3 +297,4 @@ ulCart.addEventListener('click', function () {
 
 
 setInterval(init, 10);
+
