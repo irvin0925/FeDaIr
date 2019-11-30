@@ -134,6 +134,7 @@ function dialogConfirm(text, cb) {
     divBG.appendChild(divDialog);
 
     body.appendChild(divBG);
+    return divBG;
 }
 
 function successMessage(text) {

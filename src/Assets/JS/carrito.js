@@ -5,6 +5,7 @@
     var subtotal = document.getElementById('subTotal');
     var iva = document.getElementById('iva');
     var total = document.getElementById('total');
+    var btnComprar = document.getElementById('btn-comprar');
     var items = [];
 
     function newResumenItem(data) {
@@ -20,6 +21,14 @@
                     json = JSON.parse(json);
                     if (json.delete == '1') {
                         removeMSG('cart-item-' + data.idProducto);
+                        items = items.map(obj => {
+                            if (obj.idProducto != data.idProducto) {
+                                return obj;
+                            } else {
+                                return { cant: 0, precio: 0 };
+                            }
+                        });
+                        calcularValores();
                     } else {
                         dialogError('Error al eliminar este elemento');
                     }
@@ -137,7 +146,6 @@
     }
 
     function calcularValores() {
-        console.log(items);
         var st = 0, iv = 0, tot = 0;
         for (i = 0; i < items.length; i++) {
             st += items[i].cant * items[i].precio;
@@ -150,4 +158,18 @@
     }
 
     listCartResumen();
+
+    btnComprar.addEventListener('click', function () {
+        if (items.length > 0) {
+            dialogError('Comprando...');
+        } else {
+            var msg = dialogConfirm('Debes agregar producto al carrito primero', function (result) {
+                if (result) {
+                    indexRedirect();
+                } else {
+                    removeMSG(msg.id);
+                }
+            });
+        }
+    });
 })();
