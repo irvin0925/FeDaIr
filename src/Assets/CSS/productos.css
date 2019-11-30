@@ -102,6 +102,63 @@
     border: none;
 }
 
+/* voew-more */
+
+.view-more-back {
+    position: fixed;
+    background-color: #00000033;
+    width: 100%;
+    height: 100%;
+}
+
+.view-more-content {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 45em;
+    height: 29em;
+    background-color: #fff;
+    box-shadow: 0px 0px 15px #000000;
+    border-radius: 5px;
+}
+
+.view-more-close {
+    position: absolute;
+    top: .5em;
+    right: .5em;
+    background: url(/Assets/IMG/x.png) no-repeat;
+    background-size: 20px 20px;
+    background-position: center;
+    width: 20px;
+    height: 20px;
+}
+
+.view-more-close:hover {
+    cursor: pointer;
+}
+
+.view-more-img {
+    width: 50%;
+    height: 100%;
+}
+
+.view-more-info {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 50%;
+}
+
+.view-more-agregar {
+    width: 40%;
+    position: absolute;
+    right: 5%;
+    top: 65%;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
 /* TABLETA */
 
 @media screen and (max-width:1100px) {
@@ -125,6 +182,42 @@
     .products-list-container {
         overflow: hidden;
         width: 100%;
+    }
+    /* view-more */
+    .view-more-content {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 30em;
+        height: 20em;
+        background-color: #fff;
+        box-shadow: 0px 0px 15px #000000;
+        border-radius: 5px;
+    }
+    .view-more-close:hover {
+        cursor: pointer;
+    }
+    .view-more-img {
+        width: 50%;
+        height: 100%;
+    }
+    .view-more-info {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50%;
+        height: 50%;
+    }
+    .view-more-text {
+        font-size: 10px;
+    }
+    .view-more-agregar {
+        width: 40%;
+        position: absolute;
+        right: 5%;
+        top: 65%;
+        border-radius: 10px;
+        cursor: pointer;
     }
 }
 
@@ -160,5 +253,59 @@
     .products-list-container {
         overflow: hidden;
         width: 100%;
+    }
+    /* view-more */
+    .view-more-back {
+        position: fixed;
+        background-color: #fff;
+        width: 100%;
+        height: 100%;
+        overflow: scroll;
+    }
+    .view-more-content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        box-shadow: 0px 0px 0px #000000;
+        border-radius: 0px;
+    }
+    .view-more-close {
+        position: absolute;
+        top: .5em;
+        right: .5em;
+        background: url(/Assets/IMG/x.png) no-repeat;
+        background-size: 20px 20px;
+        background-position: center;
+        width: 20px;
+        height: 20px;
+    }
+    .view-more-close:hover {
+        cursor: pointer;
+    }
+    .view-more-img {
+        position: initial;
+        width: 100%;
+        height: 55%;
+        display: block;
+    }
+    .view-more-info {
+        padding: .5em 1em;
+        display: block;
+        position: initial;
+        width: 100%;
+        height: auto;
+    }
+    .view-more-text {
+        font-size: 30px;
+    }
+    .view-more-agregar {
+        margin: 5em auto;
+        display: block;
+        width: 90%;
+        position: initial;
+        right: 5%;
+        border-radius: 10px;
+        cursor: pointer;
     }
 }

@@ -22,6 +22,72 @@
     }
 
     //New DOM
+
+    /*<div class="view-more-back box-center-fixed" id="view-more">
+        <div class="position-relative view-more-content">
+            <div class="view-more-img" style="
+        background: url(/Assets/IMG/temp_pc.png) no-repeat;
+        background-size: contain;
+        background-position: center;">
+            </div>
+            <div class="view-more-info pt-2">
+                <h5>Descripcion</h5>
+                <p class="pl-1 mt-1 view-more-text">Computadora todo en 1, monitor y componentes</p>
+            </div>
+            <div class="view-more-action">
+                <input type="button" value="Agregar al carrito" class="stat stat-add view-more-agregar">
+            </div>
+            <div class="view-more-close"></div>
+        </div>
+    </div> */
+
+    function newViewMore(data) {
+        var body = document.getElementById('body');
+        var divViewMoreBack = newDOM('div');//as parent
+        divViewMoreBack.setAttribute('class', 'view-more-back box-center-fixed');
+        divViewMoreBack.setAttribute('id', 'view-more');
+        var viewMoreContent = newDOM('div');//as parent
+        viewMoreContent.setAttribute('class', 'position-relative view-more-content');
+        var viewMoreImg = newDOM('div');//as parent
+        viewMoreImg.setAttribute('class', 'view-more-img');
+        viewMoreImg.setAttribute('style', 'background: url(/Assets/IMG/' + data.urlImg + ') no-repeat;background-size: contain;background-position: center;');
+        var viewMoreInfo = newDOM('div'),//as parent
+            title = newDOM('h5'),
+            descripcion = newDOM('p');
+        viewMoreInfo.setAttribute('class', 'view-more-info pt-2');
+        title.appendChild(newTextNode(data.nombre));
+        descripcion.setAttribute('class', 'pl-1 mt-1 view-more-text');
+        descripcion.appendChild(newTextNode(data.descripcion));
+        viewMoreInfo.appendChild(title);
+        viewMoreInfo.appendChild(descripcion);
+        var viewMoreAction = newDOM('div'),//as parent
+            input = newDOM('input');
+        viewMoreAction.setAttribute('class', 'view-more-action');
+        input.setAttribute('class', 'stat stat-add view-more-agregar');
+        input.setAttribute('type', 'button');
+        if (data.onCart === undefined || data.onCart == '0') {
+            input.setAttribute('name', 'agregar-carro');
+            input.setAttribute('value', 'Agregar a la compra');
+        } else {
+            input.setAttribute('name', 'actualizar-carrito');
+            input.setAttribute('value', 'Actualizar carrito');
+        }
+        controlProduct(input, data);
+        viewMoreAction.appendChild(input);
+        var viewMoreClose = newDOM('div');//as parent
+        viewMoreClose.setAttribute('class', 'view-more-close');
+        viewMoreClose.addEventListener('click', function () {
+            removeMSG(divViewMoreBack.id);
+        });
+        //Appends
+        viewMoreContent.appendChild(viewMoreImg);
+        viewMoreContent.appendChild(viewMoreInfo);
+        viewMoreContent.appendChild(viewMoreAction);
+        viewMoreContent.appendChild(viewMoreClose);
+        divViewMoreBack.appendChild(viewMoreContent);
+        body.appendChild(divViewMoreBack);
+    }
+
     function newCategory(data) {
         var liCategory = newDOM('li');
         liCategory.setAttribute('class', 'category-item pl-2 pt-1 pb-1');
@@ -142,13 +208,14 @@
         element.addEventListener('click', function (e) {
             var name = e.target.attributes.name.value;
             if (name == 'ver-mas') {
-                alert(data.idProducto + ' ver mas');
+                newViewMore(data);
             } else if (name == 'agregar-carro') {
                 accepted(function (json) {
                     if (json) {
                         agregarAlCarrito(data, function (result) {
                             if (result) {
                                 element.innerHTML = "Actualizar carrito";
+                                element.setAttribute('value', 'Actualizar carrito');
                                 element.setAttribute('name', 'actualizar-carrito');
                             } else {
                                 dialogError('Error al agregar');

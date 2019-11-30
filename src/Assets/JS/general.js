@@ -76,7 +76,7 @@ function dialogWait(text) {
     var divHeader = newDOM('div');
     divHeader.setAttribute('class', 'dialog-error-header');
     var title = newDOM('h5');
-    title.setAttribute('class', 'dialog-error-msg');
+    title.setAttribute('class', 'dialog-error-msg text-center');
     title.appendChild(newTextNode(text));
     var divAction = newDOM('div');
     divAction.setAttribute('class', 'dialog-error-actions');
