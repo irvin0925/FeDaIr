@@ -1,21 +1,11 @@
 (function () {
     'use-stric';
 
-    /*<div class="cart-item p-1 mb">
-        <div class="cart-item-delete"></div>
-        <div class="cart-item-img"
-            style="background: url(/Assets/IMG/temp_pc.png) no-repeat;background-size: contain;background-position: center center;">
-        </div>
-        <p class="cart-item-name">Computadora todo en 1, monitor y componentes </p>
-        <div class="cart-item-cant-control">
-            <div class="cart-item-cant-control-less p-2"></div>
-            <div class="cart-item-cant-control-value">1</div>
-            <div class="cart-item-cant-control-plus p-2"></div>
-        </div>
-        <div class="cart-item-price">1234567890.12</div>
-    </div>*/
-
     var resumenContainer = document.getElementById('resumen-cart');
+    var subtotal = document.getElementById('subTotal');
+    var iva = document.getElementById('iva');
+    var total = document.getElementById('total');
+    var items = [];
 
     function newResumenItem(data) {
         var divCartItem = newDOM('div');
@@ -61,6 +51,15 @@
                     if (json.error == 0) {
                         value.innerHTML = '';
                         value.appendChild(newTextNode(json.cant));
+                        items = items.map(obj => {
+                            if (obj.idProducto != data.idProducto) {
+                                return obj;
+                            } else {
+                                data.cant = json.cant;
+                                return data;
+                            }
+                        });
+                        calcularValores();
                     } else {
                         dialogError(json.msg);
                     }
@@ -76,6 +75,15 @@
                 if (json.error == 0) {
                     value.innerHTML = '';
                     value.appendChild(newTextNode(json.cant));
+                    items = items.map(obj => {
+                        if (obj.idProducto != data.idProducto) {
+                            return obj;
+                        } else {
+                            data.cant = json.cant;
+                            return data;
+                        }
+                    });
+                    calcularValores();
                 } else {
                     dialogError(json.msg);
                 }
@@ -96,7 +104,6 @@
     function calcularCantidad(e, cb) {
         if (e.name == 'btn-less') {
             postAjaxRequest(apiURL, 'cart=4&idProduct=' + e.idProduct, function (json) {
-                console.log(json);
                 if (json != 'Error') {
                     json = JSON.parse(json);
                     cb(json);
@@ -104,7 +111,6 @@
             });
         } else if (e.name == 'btn-plus') {
             postAjaxRequest(apiURL, 'cart=3&idProduct=' + e.idProduct, function (json) {
-                console.log(json);
                 if (json != 'Error') {
                     json = JSON.parse(json);
                     cb(json);
@@ -115,16 +121,32 @@
 
     function listCartResumen() {
         postAjaxRequest(apiURL, 'cart=1', function (json) {
-            console.log(json);
             if (json != 'Error') {
                 json = JSON.parse(json);
                 resumenContainer.innerHTML = '';
+                items = json;
                 for (i = 0; i < json.length; i++) {
                     var cartItem = newResumenItem(json[i]);
                     resumenContainer.appendChild(cartItem);
                 }
+                calcularValores();
+            } else {
+                dialogError('Ha ocurrido un error');
             }
         });
+    }
+
+    function calcularValores() {
+        console.log(items);
+        var st = 0, iv = 0, tot = 0;
+        for (i = 0; i < items.length; i++) {
+            st += items[i].cant * items[i].precio;
+        }
+        iv = 0.13 * st;
+        tot = st + iv;
+        subtotal.innerHTML = st;
+        iva.innerHTML = iv;
+        total.innerHTML = tot;
     }
 
     listCartResumen();
