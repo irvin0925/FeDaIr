@@ -21,12 +21,8 @@
                     json = JSON.parse(json);
                     if (json.delete == '1') {
                         removeMSG('cart-item-' + data.idProducto);
-                        items = items.map(obj => {
-                            if (obj.idProducto != data.idProducto) {
-                                return obj;
-                            } else {
-                                return { cant: 0, precio: 0 };
-                            }
+                        items = items.filter(obj => {
+                            return obj.idProducto != data.idProducto;
                         });
                         calcularValores();
                     } else {
