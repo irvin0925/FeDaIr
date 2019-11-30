@@ -16,7 +16,7 @@ function isAccepted($user, $pass)
             }
         }
         return false;
-    } catch (PDOException $ex) {
+    } catch (mysqli_sql_exception $ex) {
         return false;
     }
 }
@@ -35,7 +35,7 @@ function showCategories($filter)
             }
         }
         return json_encode($json);
-    } catch (PDOException $ex) {
+    } catch (mysqli_sql_exception $ex) {
         return "false";
     }
 }
@@ -60,7 +60,7 @@ function showProducts($filter)
             }
         }
         return json_encode($json);
-    } catch (PDOException $ex) {
+    } catch (mysqli_sql_exception $ex) {
         return "false";
     }
 }
@@ -82,7 +82,7 @@ function addToCart($product)
             return $result;
         }
         return false;
-    } catch (PDOException $ex) {
+    } catch (mysqli_sql_exception $ex) {
         return false;
     }
 }
@@ -101,7 +101,7 @@ function alreadyOnCart($product)
             }
         }
         return false;
-    } catch (PDOException $ex) {
+    } catch (mysqli_sql_exception $ex) {
         return false;
     }
 }
@@ -109,7 +109,6 @@ function alreadyOnCart($product)
 function cantExistencia($product)
 {
     try {
-        global $session;
         $sql = "select cantidadDisponible from Producto where idProducto = " . $product['idProduct'];
         $result = getData($sql);
         if ($result != null) {
@@ -120,7 +119,84 @@ function cantExistencia($product)
             }
         }
         return 0;
-    } catch (PDOException $ex) {
+    } catch (mysqli_sql_exception $ex) {
+        return 0;
+    }
+}
+
+/*Carrrito */
+
+function showCarrito()
+{
+    try {
+        global $session;
+        $sql = "select idLineaCarrito,p.idProducto as idProducto,urlImg,nombre,cant,precio 
+        from carrito c, producto p where (c.idProducto = p.idProducto) and idUsuario = " . $session->getIdUser();
+        $result = getData($sql);
+        $json = [];
+        if ($result != null) {
+            if ($result->num_rows >= 1) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $json[] = $row;
+                }
+            }
+            return json_encode($json);
+        }
+        return json_encode(["error" => 1]);
+    } catch (mysqli_sql_exception $ex) {
+        return json_encode(["error" => 1]);
+    }
+}
+
+function deleteItemFromCart($filter)
+{
+    try {
+        global $session;
+        $dml = 'delete from Carrito where idProducto = ' . $filter['idProducto'] . ' and idUsuario =' . $session->getIdUser();
+        $result = runDml($dml);
+        return $result;
+    } catch (mysqli_sql_exception $ex) {
+        return false;
+    }
+}
+
+function cambiarCantidad($filter)
+{
+    try {
+        global $session;
+        $prev = cantidadActual($filter);
+        $cant = $filter['operation'] == '+' ? $prev + 1 : $prev - 1;
+        if ($cant <= cantExistencia($filter) && $cant >= 1) {
+            $dml = 'update Carrito set cant =' . $cant . ' where idProducto = ' . $filter['idProduct'] . ' and idUsuario =' . $session->getIdUser();
+            $result = runDml($dml);
+            if ($result) {
+                return '{"msg":"","error":0,"cant":' . $cant . '}';
+            } else {
+                return '{"msg":"","error":0,"cant":' . $prev . '}';
+            }
+        } else {
+            return '{"msg":"Cantidad en existencia insuficiente","error":1}';
+        }
+    } catch (mysqli_sql_exception $ex) {
+        return '{ "msg":"Error al intentar cambiar la cantidad","error":1 }';
+    }
+}
+
+function cantidadActual($filter)
+{
+    try {
+        global $session;
+        $sql = 'select cant from Carrito where idProducto = ' . $filter['idProduct'] . ' and idUsuario =' . $session->getIdUser();
+        $result = getData($sql);
+        if ($result != null) {
+            if ($result->num_rows >= 1) {
+                foreach ($result as $data) {
+                    return $data['cant'];
+                }
+            }
+        }
+        return 0;
+    } catch (mysqli_sql_exception $ex) {
         return 0;
     }
 }

@@ -1,10 +1,20 @@
 (function () {
     var btnLogin = document.getElementById('btnLogin');
+    var user = document.getElementById('user'), pass = document.getElementById('pass');
 
     btnLogin.addEventListener('click', login);
+    user.addEventListener('keyup', function (e) {
+        if (e.keyCode == 13) {
+            login();
+        }
+    });
+    pass.addEventListener('keyup', function (e) {
+        if (e.keyCode == 13) {
+            login();
+        }
+    });
 
     function login() {
-        var user = document.getElementById('user'), pass = document.getElementById('pass');
         var data = 'login=1&user=' + user.value + '&pass=' + pass.value;
         postAjaxRequest('../API/api.php', data, function (result) {
             if (result != 'Error' || result != '[]') {

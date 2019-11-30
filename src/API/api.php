@@ -57,8 +57,25 @@ if (isset($dataPOST['login'])) {
         } else {
             echo '{ "add": 0 }';
         }
-        //addCart=1&idProducto=
-
+    }
+} else if (isset($dataPOST['cart'])) {
+    if (isAccepted($session->getUser(), $session->getPassword())) {
+        if ($dataPOST['cart'] == '1') { //show all
+            echo showCarrito();
+        } else if ($dataPOST['cart'] == '2') { //delete one
+            $filter = ["idProducto" => $dataPOST['idProduct']];
+            if (deleteItemFromCart($filter)) {
+                echo '{ "delete":1 }';
+            } else {
+                echo '{ "delete":0 }';
+            }
+        } else if ($dataPOST['cart'] == '3') { //Add cant
+            $filter = ["idProduct" => $dataPOST['idProduct'], "operation" => '+'];
+            echo cambiarCantidad($filter);
+        } else if ($dataPOST['cart'] == '4') { //Substrac cant
+            $filter = ["idProduct" => $dataPOST['idProduct'], "operation" => '-'];
+            echo cambiarCantidad($filter);
+        }
     }
 } else {
     $session->closeSession();

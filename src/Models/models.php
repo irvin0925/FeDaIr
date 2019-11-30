@@ -25,7 +25,7 @@ class Connection
             $this->conn = new mysqli($this->host['host'], $this->usu, $this->pass, $this->host['dbname']);
             $this->conn->set_charset('utf8');
             return $this->conn;
-        } catch (PDOException $exc) {
+        } catch (mysqli_sql_exception $exc) {
             return null;
         }
     }

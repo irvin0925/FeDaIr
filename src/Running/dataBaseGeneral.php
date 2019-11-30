@@ -6,7 +6,7 @@ function runDml($dml)
     try {
         $result = $connection->getConexion()->query($dml);
         return $result;
-    } catch (PDOException $ex) {
+    } catch (mysqli_sql_exception $ex) {
         echo $ex;
         return false;
     }
@@ -21,7 +21,7 @@ function getData($sql)
         if ($result != null && $result->num_rows > 0) {
             return $result;
         }
-    } catch (PDOException $ex) {
+    } catch (mysqli_sql_exception $ex) {
         return false;
     }
 }

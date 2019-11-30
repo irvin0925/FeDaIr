@@ -138,5 +138,14 @@ values ('305230724','Daniel Coto Quiros','danielCQgt4',md5('1234'),'61963428',1)
 
 select count(*) as valido,idUsuario from Usuario where usuario = 'danielCQgt4' and contra = md5('1234') group by idUsuario;
 
+desc Producto;
+
+
+select idProducto,nombre,descripcion,precio,cantidadDisponible,cantCompras,urlImg,idCategoriaProducto 
+,(select count(*) from carrito where idProducto = p.idProducto and idUsuario = 1) as onCart
+from Producto p;
+
+
+
 delete from carrito where idLineaCarrito > 0;
 alter table carrito auto_increment = 1;

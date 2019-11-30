@@ -14,8 +14,22 @@ function init() {
     }
 };
 
-function toggle(element) {
+function animation(element, from, to) {
+    if (from == undefined) {
+        from = 1;
+    }
+    if (to == undefined) {
+        to = 1;
+    }
+    Object.assign(element.style, from);
+    Object.assign(element.style, to);
+}
+
+function toggle(element, time) {
     //Hace que el elemento se oculte con animacion
+    if (time == undefined) {
+        time = 1;
+    }
     if (element.style.display != 'none') {
         var i = 100;
         var hide = setInterval(() => {
@@ -23,10 +37,10 @@ function toggle(element) {
                 element.style.opacity = i / 100;
                 i = i - 1;
             } else {
-                element.style = "display: none;";
+                element.style.display = "none";
                 clearInterval(hide);
             }
-        }, 5);
+        }, time);
     }
     //Hace que el elemento se aparezca con animacion
     else {
@@ -38,10 +52,10 @@ function toggle(element) {
                 element.style.opacity = i / 100;
                 i = i + 1;
             } else {
-                element.style = "display:block;";
+                element.style.display = "block";
                 clearInterval(hide);
             }
-        }, 5);
+        }, time);
     }
 }
 
@@ -190,6 +204,21 @@ var btnAction = document.getElementById('btn-action'),
     apiURL = '../API/api.php',
     ulCart = document.getElementById('cart');
 
+function acceptedEntrance(cb) {
+    postAjaxRequest(apiURL, 'login=2', function (json) {
+        if (json != 'Error') {
+            json = JSON.parse(json);
+            if (json.accept == '1') {
+                cb(true);
+            } else {
+                cb(false);
+            }
+        } else {
+            dialogError('Error de comunicacion!');
+        }
+    });
+}
+
 function accepted(cb) {
     postAjaxRequest(apiURL, 'login=2', function (json) {
         if (json != 'Error') {
@@ -231,7 +260,7 @@ function cartRedirect() {
 
 btnAction.addEventListener('click', function () {
     if (!responsiveDesing) {
-        toggle(navList);
+        toggle(navList, 0.5);
     } else {
         cartRedirect();
     }
