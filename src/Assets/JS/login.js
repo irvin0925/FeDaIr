@@ -16,7 +16,7 @@
 
     function login() {
         var data = 'login=1&user=' + user.value + '&pass=' + pass.value;
-        postAjaxRequest('../API/api.php', data, function (result) {
+        postAjaxRequest(apiURL, data, function (result) {
             if (result != 'Error' || result != '[]') {
                 var json = JSON.parse(result);
                 if (json.status == '1') {

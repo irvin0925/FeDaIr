@@ -16,19 +16,24 @@
         btnDeleteCartItem.setAttribute('class', 'cart-item-delete');// as parent
         //Event
         btnDeleteCartItem.addEventListener('click', function () {
-            postAjaxRequest(apiURL, 'cart=2&idProduct=' + data.idProducto, function (json) {
-                if (json != 'Error') {
-                    json = JSON.parse(json);
-                    if (json.delete == '1') {
-                        removeMSG('cart-item-' + data.idProducto);
-                        items = items.filter(obj => {
-                            return obj.idProducto != data.idProducto;
-                        });
-                        calcularValores();
-                    } else {
-                        dialogError('Error al eliminar este elemento');
-                    }
+            var msg = dialogConfirm('Esta segur@ que desea eliminarlo?', function (result) {
+                if (result) {
+                    postAjaxRequest(apiURL, 'cart=2&idProduct=' + data.idProducto, function (json) {
+                        if (json != 'Error') {
+                            json = JSON.parse(json);
+                            if (json.delete == '1') {
+                                removeMSG('cart-item-' + data.idProducto);
+                                items = items.filter(obj => {
+                                    return obj.idProducto != data.idProducto;
+                                });
+                                calcularValores();
+                            } else {
+                                dialogError('Error al eliminar este elemento');
+                            }
+                        }
+                    });
                 }
+                removeMSG(msg.id);
             });
         });
         divCartItem.appendChild(btnDeleteCartItem);
