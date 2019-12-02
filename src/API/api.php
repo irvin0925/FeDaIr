@@ -75,6 +75,8 @@ if (isset($dataPOST['login'])) {
         } else if ($dataPOST['cart'] == '4') { //Substrac cant
             $filter = ["idProduct" => $dataPOST['idProduct'], "operation" => '-'];
             echo cambiarCantidad($filter);
+        } else if ($dataPOST['cart'] == '5') { //List cards
+            echo listCards();
         }
     }
 } else {

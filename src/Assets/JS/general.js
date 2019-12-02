@@ -215,6 +215,16 @@ function getAjaxRequest(url, data, callFunction) {
     }
 }
 
+function newImg(data) {
+    var img = newDOM('img');
+    img.setAttribute('src', data.src);
+    img.setAttribute('width', data.width);
+    img.setAttribute('height', data.height);
+    img.setAttribute('alt', data.alt);
+    img.setAttribute('class', data.class);
+    return img;
+}
+
 function newDOM(type) {
     return document.createElement(type);
 }

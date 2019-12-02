@@ -200,3 +200,26 @@ function cantidadActual($filter)
         return 0;
     }
 }
+
+/*TEMP*/
+
+function listCards()
+{
+    try {
+        global $session;
+        $sql = "select idFormaPago,right(numeroTarjeta,4) as numeroTarjeta from formaPago where idUsuario = " . $session->getIdUser();
+        $result = getData($sql);
+        $json = [];
+        if ($result != null) {
+            if ($result->num_rows >= 1) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $json[] = $row;
+                }
+            }
+            return json_encode($json);
+        }
+        return json_encode(["error" => 1]);
+    } catch (mysqli_sql_exception $th) {
+        return json_encode(["error" => 1]);
+    }
+}

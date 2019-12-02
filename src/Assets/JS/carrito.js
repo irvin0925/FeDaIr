@@ -5,40 +5,47 @@
     acceptedEntrance(function (result) {
         if (result) {
             var resumenContainer = document.getElementById('resumen-cart');
+            var cardsList = document.getElementById('cart-cards-body-table');
             var subtotal = document.getElementById('subTotal');
             var iva = document.getElementById('iva');
             var total = document.getElementById('total');
             var btnComprar = document.getElementById('btn-comprar');
             var btnAddCard = document.getElementById('btn-newAddCard');
-            var items = [];
+            var items = [], curCard = { id: -1, referecia: '****' };
 
             /* 
-            <div class="back-dark d-none">
-                <div class="box-center-fixed cart-add-car-back p-1">
-                    <h3 class="text-center d-block mt-1">Digita otra tarjeta</h3>
-                    <div class="form-group mt-1">
-                        <label for="">Numero de tarjeta<p class="text-danger d-inline">*</p>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" placeholder="Ingresa un numero de tarjeta" class="form-content">
-                    </div>
-                    <div class="form-group">
-                        <label for="">Codigo de seguridad<p class="text-danger d-inline">*</p>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" placeholder="Ingresa el codigo cvv" class="form-content">
-                    </div>
-                    <div class="form-group">
-                        <input type="button" value="Agregar" class="btn btn-accent d-block w-100">
-                    </div>
-                    <div class="form-group">
-                        <input type="button" value="Cancelar" class="btn btn-danger d-block w-100">
-                    </div>
-                </div>
-            </div>
+            <tr class="cart-pay-method-row">
+                <td class="pr-1" id="cart-card-selected-1">
+                    <img src="/Assets/IMG/check.png" alt="Seleccionada" width="45px" height="45px">
+                </td>
+                <td>
+                    <img src="/Assets/IMG/card.png" alt="Tarjeta" width="136px" height="136px">
+                </td>
+                <td class="p-1">
+                    XXXX-1234
+                </td>
+            </tr>
             */
+
+            function newCartMethod(data, i) {
+                var tr = newDOM('tr');
+                tr.setAttribute('class', 'cart-pay-method-row');
+                tr.addEventListener('click', function () {
+                    alert('Haz seleccionado ' + i);
+                });
+                var tdSelect = newDOM('td');
+                tdSelect.setAttribute('class', 'pr-1');
+                tdSelect.setAttribute('id', 'cart-card-selected-' + i);
+                tr.appendChild(tdSelect);
+                var tdIMG = newDOM('td');
+                tdIMG.appendChild(newImg({ src: '/Assets/IMG/card.png', alt: 'Tarjeta', width: '136px', height: '136px' }));
+                tr.appendChild(tdIMG);
+                var tdNumber = newDOM('td');
+                tdNumber.setAttribute('class', 'p-1');
+                tdNumber.appendChild(newTextNode('XXXX-' + data.numeroTarjeta));
+                tr.appendChild(tdNumber);
+                return tr;
+            }
 
             function newAddCard() {
                 var body = document.getElementById('body');
@@ -257,6 +264,20 @@
                 });
             }
 
+            function listCards() {
+                postAjaxRequest(apiURL, 'cart=5', function (json) {
+                    if (json.errorBody != 'Error' || json.error != '') {
+                        cardsList.innerHTML = '';
+                        for (i = 0; i < json.length; i++) {
+                            var card = newCartMethod(json[i], i);
+                            cardsList.appendChild(card);
+                        }
+                    } else {
+                        dialogError('Ha ocurrido un error');
+                    }
+                });
+            }
+
             function calcularValores() {
                 var st = 0, iv = 0, tot = 0;
                 for (i = 0; i < items.length; i++) {
@@ -270,6 +291,7 @@
             }
 
             listCartResumen();
+            listCards();
 
             btnComprar.addEventListener('click', function () {
                 if (items.length > 0) {
