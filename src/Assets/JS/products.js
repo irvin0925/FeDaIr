@@ -165,8 +165,7 @@
     //Mostrar informacion
     function listProducts(filterValue) {
         postAjaxRequest(apiURL, filterValue, function (json) {
-            if (json != 'Error') {
-                json = JSON.parse(json);
+            if (json.errorBody != 'Error' || json.error != '') {
                 productShowing.length = 0;
                 resetListProducts();
                 for (i = 0; i < json.length; i++) {
@@ -180,8 +179,7 @@
 
     function listCategories(filterValue) {
         postAjaxRequest(apiURL, filterValue, function (json) {
-            if (json != 'Error') {
-                json = JSON.parse(json);
+            if (json.errorBody != 'Error' || json.error != '') {
                 resetListCategory();
                 for (i = 0; i < json.length; i++) {
                     var category = newCategory(json[i]);
@@ -231,8 +229,7 @@
 
     function agregarAlCarrito(data, cb) {
         postAjaxRequest(apiURL, 'addCart=1&cant=1&idProduct=' + data.idProducto, function (json) {
-            if (json != 'Error') {
-                json = JSON.parse(json);
+            if (json.errorBody != 'Error' || json.error != '') {
                 cb(json.add == '1');
             }
         });

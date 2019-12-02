@@ -16,9 +16,8 @@
 
     function login() {
         var data = 'login=1&user=' + user.value + '&pass=' + pass.value;
-        postAjaxRequest(apiURL, data, function (result) {
-            if (result != 'Error' || result != '[]') {
-                var json = JSON.parse(result);
+        postAjaxRequest(apiURL, data, function (json) {
+            if (json.errorBody != 'Error' || json.error != '') {
                 if (json.status == '1') {
                     window.location.href = "/Views/productos.html";
                 } else {
@@ -27,6 +26,8 @@
                     var loginForm = document.getElementById('loginForm');
                     errorMessage('Error al iniciar sesion', loginForm);
                 }
+            } else {
+                errorMessage('Error de comunicacion');
             }
         });
     }

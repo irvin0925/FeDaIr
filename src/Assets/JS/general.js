@@ -1,6 +1,7 @@
 "use stric";
 var screenWidth = screen.width, responsiveDesing = screenWidth > 1100, change = responsiveDesing;
 
+setInterval(init, 10);
 //Funciones generales para todos los documentos
 function init() {
     screenWidth = screen.width;
@@ -13,17 +14,6 @@ function init() {
         navList.style.display = 'none';
     }
 };
-
-function animation(element, from, to) {
-    if (from == undefined) {
-        from = 1;
-    }
-    if (to == undefined) {
-        to = 1;
-    }
-    Object.assign(element.style, from);
-    Object.assign(element.style, to);
-}
 
 function toggle(element, time) {
     //Hace que el elemento se oculte con animacion
@@ -185,34 +175,44 @@ function errorMessage(text, parent) {
 
 /* Funcion general de ajax*/
 function postAjaxRequest(url, data, callFunction) {
-    var ajax = new XMLHttpRequest();
-    ajax.open('POST', url, true);
-    ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    ajax.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            if (typeof callFunction === 'function') {
-                callFunction(this.responseText);
+    try {
+        var ajax = new XMLHttpRequest();
+        ajax.open('POST', url, true);
+        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        ajax.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var json = JSON.parse(this.responseText);
+                callFunction(json);
             } else {
-                callFunction("Error");
+                if (this.status >= 400 && this.status <= 451) {
+                    callFunction({ errorBody: 'Error', error: this.status });
+                }
             }
-        }
-    };
-    ajax.send(data);
+        };
+        ajax.send(data);
+    } catch (error) {
+        callFunction({ errorBody: 'Error', error });
+    }
 }
 
 function getAjaxRequest(url, data, callFunction) {
-    var ajax = new XMLHttpRequest();
-    ajax.open('GET', url + '?' + data, true);
-    ajax.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            if (typeof callFunction === 'function') {
-                callFunction(this.responseText);
+    try {
+        var ajax = new XMLHttpRequest();
+        ajax.open('GET', url + '?' + data, true);
+        ajax.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var json = JSON.parse(this.responseText);
+                callFunction(json);
             } else {
-                callFunction("Error");
+                if (this.status >= 400 && this.status <= 451) {
+                    callFunction({ errorBody: 'Error', error: this.status });
+                }
             }
-        }
-    };
-    ajax.send();
+        };
+        ajax.send();
+    } catch (error) {
+        callFunction({ errorBody: 'Error', error });
+    }
 }
 
 function newDOM(type) {
@@ -231,8 +231,7 @@ var btnAction = document.getElementById('btn-action'),
 
 function acceptedEntrance(cb) {
     postAjaxRequest(apiURL, 'login=2', function (json) {
-        if (json != 'Error') {
-            json = JSON.parse(json);
+        if (json.errorBody != 'Error' || json.error != '') {
             if (json.accept == '1') {
                 cb(true);
             } else {
@@ -246,8 +245,7 @@ function acceptedEntrance(cb) {
 
 function accepted(cb) {
     postAjaxRequest(apiURL, 'login=2', function (json) {
-        if (json != 'Error') {
-            json = JSON.parse(json);
+        if (json.errorBody != 'Error' || json.error != '') {
             if (json.accept == '1') {
                 cb(true);
             } else {
@@ -296,5 +294,4 @@ ulCart.addEventListener('click', function () {
 });
 
 
-setInterval(init, 10);
 
