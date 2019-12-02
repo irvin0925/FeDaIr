@@ -38,9 +38,8 @@
                     var temp;
                     for (j = 0; j < max; j++) {
                         temp = document.getElementById('cart-card-selected-' + j);
-                        if (j != i) {
-                            temp.innerHTML = '';
-                        } else {
+                        temp.innerHTML = '';
+                        if (j == i) {
                             temp.appendChild(newImg({ src: '/Assets/IMG/check.png', alt: 'Seleccionada', width: '45px', height: '45px' }));
                         }
                     }
