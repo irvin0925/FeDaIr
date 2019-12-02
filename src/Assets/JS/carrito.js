@@ -27,14 +27,26 @@
             </tr>
             */
 
-            function newCartMethod(data, i) {
+            function newCartMethod(data, i, max) {
                 var tr = newDOM('tr');
                 tr.setAttribute('class', 'cart-pay-method-row');
                 tr.addEventListener('click', function () {
-                    alert('Haz seleccionado ' + i);
+                    curCard = {
+                        id: data.idFormaPago,
+                        referecia: data.numeroTarjeta
+                    };
+                    var temp;
+                    for (j = 0; j < max; j++) {
+                        temp = document.getElementById('cart-card-selected-' + j);
+                        if (j != i) {
+                            temp.innerHTML = '';
+                        } else {
+                            temp.appendChild(newImg({ src: '/Assets/IMG/check.png', alt: 'Seleccionada', width: '45px', height: '45px' }));
+                        }
+                    }
                 });
                 var tdSelect = newDOM('td');
-                tdSelect.setAttribute('class', 'pr-1');
+                tdSelect.setAttribute('class', 'pr-1 max-width-px-45');
                 tdSelect.setAttribute('id', 'cart-card-selected-' + i);
                 tr.appendChild(tdSelect);
                 var tdIMG = newDOM('td');
@@ -268,8 +280,9 @@
                 postAjaxRequest(apiURL, 'cart=5', function (json) {
                     if (json.errorBody != 'Error' || json.error != '') {
                         cardsList.innerHTML = '';
-                        for (i = 0; i < json.length; i++) {
-                            var card = newCartMethod(json[i], i);
+                        const max = json.length;
+                        for (i = 0; i < max; i++) {
+                            var card = newCartMethod(json[i], i, max);
                             cardsList.appendChild(card);
                         }
                     } else {
@@ -295,7 +308,11 @@
 
             btnComprar.addEventListener('click', function () {
                 if (items.length > 0) {
-                    dialogError('Comprando...');
+                    if (curCard.id != -1) {
+                        dialogError('Comprando...');
+                    } else {
+                        dialogError('Debes seleccionar un metodo de pago');
+                    }
                 } else {
                     var msg = dialogConfirm('Debes agregar producto al carrito primero', function (result) {
                         if (result) {
