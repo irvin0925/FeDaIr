@@ -27,20 +27,6 @@ function showCategories($filter)
     $sql = "select * from CategoriaProducto where" .
         " descripcion like '%" . $filter . "%'";
     return getJson($sql);
-    /*try {
-        $sql = "select * from CategoriaProducto where" .
-            " descripcion like '%" . $filter . "%'";
-        $result = getData($sql);
-        $json = [];
-        if ($result != null && $result->num_rows > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $json[] = $row;
-            }
-        }
-        return json_encode($json);
-    } catch (mysqli_sql_exception $ex) {
-        return "false";
-    }*/
 }
 
 function showProducts($filter)
@@ -55,27 +41,6 @@ function showProducts($filter)
              or descripcion like '%" . $filter['filter'] .
         "%' or precio like '%" . $filter['filter'] . "%') " . $filter['category'];
     return getJson($sql);
-    /*try {
-        global $session;
-        $sqlPlus = '';
-        if (!empty($_SESSION['idUser'])) {
-            $sqlPlus = ',(select count(*) from carrito where idProducto = p.idProducto and idUsuario = ' . $session->getIdUser() . ') as onCart';
-        }
-        $sql = "select idProducto,nombre,descripcion,precio,cantidadDisponible,cantCompras,urlImg,idCategoriaProducto " . $sqlPlus . " from Producto p where" .
-            " (nombre like '%" . $filter['filter'] . "%'
-             or descripcion like '%" . $filter['filter'] .
-            "%' or precio like '%" . $filter['filter'] . "%') " . $filter['category'];
-        $result = getData($sql);
-        $json = [];
-        if ($result != null && $result->num_rows > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $json[] = $row;
-            }
-        }
-        return json_encode($json);
-    } catch (mysqli_sql_exception $ex) {
-        return "false";
-    }*/
 }
 
 function addToCart($product)
@@ -145,24 +110,6 @@ function showCarrito()
     $sql = "select idLineaCarrito,p.idProducto as idProducto,urlImg,nombre,cant,precio 
     from carrito c, producto p where (c.idProducto = p.idProducto) and idUsuario = " . $session->getIdUser();
     return getJson($sql);
-    /*try {
-        global $session;
-        $sql = "select idLineaCarrito,p.idProducto as idProducto,urlImg,nombre,cant,precio 
-        from carrito c, producto p where (c.idProducto = p.idProducto) and idUsuario = " . $session->getIdUser();
-        $result = getData($sql);
-        $json = [];
-        if ($result != null) {
-            if ($result->num_rows >= 1) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $json[] = $row;
-                }
-            }
-            return json_encode($json);
-        }
-        return json_encode(["error" => 1]);
-    } catch (mysqli_sql_exception $ex) {
-        return json_encode(["error" => 1]);
-    }*/
 }
 
 function deleteItemFromCart($filter)
@@ -225,23 +172,6 @@ function listCards()
     global $session;
     $sql = "select idFormaPago,right(numeroTarjeta,4) as numeroTarjeta from formaPago where idUsuario = " . $session->getIdUser();
     return getJson($sql);
-    /*try {
-        global $session;
-        $sql = "select idFormaPago,right(numeroTarjeta,4) as numeroTarjeta from formaPago where idUsuario = " . $session->getIdUser();
-        $result = getData($sql);
-        $json = [];
-        if ($result != null) {
-            if ($result->num_rows >= 1) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $json[] = $row;
-                }
-            }
-            return json_encode($json);
-        }
-        return json_encode(["error" => 1]);
-    } catch (mysqli_sql_exception $th) {
-        return json_encode(["error" => 1]);
-    }*/
 }
 
 function makePurchase($filter)
