@@ -165,6 +165,72 @@ function cantidadActual($filter)
     }
 }
 
+//Facturacion
+function beforePurchase()
+{
+    try {
+        global $session;
+        $sql = "select 
+        round(sum(p.precio * c.cant),2) as subTotal,
+        round((sum(p.precio * c.cant)* 0.13),2) as iva,
+        round((sum(p.precio * c.cant)* 0.13) + sum(p.precio * c.cant),2) as total
+        from Carrito c, Producto p where (c.idProducto = p.idProducto) and idUsuario = " . $session->getIdUser();
+        return getJson($sql);
+    } catch (mysqli_sql_exception $th) {
+        return json_encode(['subTotal' => -1, 'iva' => -1, 'total' => -1]);
+    }
+}
+
+function moveToPurchase()
+{
+    try {
+        global $session;
+        $dml = "insert into FacturaDetalle (idFacturaEncabezado,cant,idProducto) 
+            select (select max(idFacturaEncabezado) from FacturaEncabezado where idUsuario = " . $session->getIdUser() . "),cant,idProducto
+            from Carrito where idUsuario = " . $session->getIdUser();
+        $result = runDml($dml);
+        if ($result) {
+            $dml = "delete from Carrito where idLineaCarrito > 0 and idUsuario = " . $session->getIdUser();
+            $result = runDml($dml);
+            return $result;
+        }
+        return false;
+    } catch (mysqli_sql_exception $th) {
+        return false;
+    }
+}
+
+function makePurchase($filter)
+{
+    try {
+        global $session;
+        $formaPago = $filter['idFormaPago'];
+        if ($filter['idFormaPago'] < 0) {
+            $formaPago = 'null';
+        }
+        $json = beforePurchase();
+        $calculos = json_decode($json, true);
+        if ($calculos[0]['subTotal'] != '-1' && $calculos[0]['total'] != '-1' && $calculos[0]['iva'] != '-1') {
+            $dml = "insert into FacturaEncabezado (fecha,subTotal,total,impuesto,
+                idUsuario,idFormapago,referencia)
+                values (CURDATE()," . $calculos[0]['subTotal'] . ',' . $calculos[0]['total'] . ',' . $calculos[0]['iva'] .
+                ',' . $session->getIdUser() . ',' . $formaPago . ',' . $filter['referencia'] . ')';
+            $result = runDml($dml);
+            if ($result) {
+                $result = moveToPurchase();
+                return $result;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } catch (mysqli_sql_exception $th) {
+        return false;
+    }
+}
+
+
 /*TEMP*/
 
 function listCards()
@@ -172,9 +238,4 @@ function listCards()
     global $session;
     $sql = "select idFormaPago,right(numeroTarjeta,4) as numeroTarjeta from formaPago where idUsuario = " . $session->getIdUser();
     return getJson($sql);
-}
-
-function makePurchase($filter)
-{
-    echo 'Temp';
 }

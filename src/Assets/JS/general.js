@@ -79,7 +79,7 @@ function dialogWait(text) {
     return divBG;
 }
 
-function dialogError(text) {
+function dialogError(text, cb) {
     var body = document.getElementById('body');
     var divBG = newDOM('div');
     divBG.setAttribute('class', 'dialog-error-back position-relative');
@@ -98,9 +98,12 @@ function dialogError(text) {
     input1.setAttribute('type', 'button');
     input1.setAttribute('value', 'Aceptar');
     input1.addEventListener('click', function () {
-        removeMSG('dialog-error');
+        if (cb == undefined || cb == null) {
+            removeMSG('dialog-error');
+        } else {
+            cb();
+        }
     });
-
     divAction.appendChild(input1);
     divDialog.appendChild(divHeader);
     divDialog.appendChild(title);

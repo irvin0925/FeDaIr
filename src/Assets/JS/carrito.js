@@ -405,8 +405,12 @@
                         postAjaxRequest(apiURL, data, function (json) {
                             if (json.errorBody != 'Error' || json.error != '') {
                                 removeMSG(msg.id);
-                                if (true) {
-                                    errorMessage('La compra se ha efectuado correctamente');
+                                if (json.error == '0') {
+                                    dialogError('La compra se ha efectuado correctamente', function () {
+                                        indexRedirect();
+                                    });
+                                } else {
+                                    dialogError('Error al efectuar la compra');
                                 }
                             } else {
                                 removeMSG(msg.id);

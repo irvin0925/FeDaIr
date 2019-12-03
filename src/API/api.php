@@ -79,7 +79,11 @@ if (isset($dataPOST['login'])) {
             echo listCards();
         } else if ($dataPOST['cart'] == '6') { //Purchase
             $filter = $dataPOST;
-            echo makePurchase($filter);
+            if (makePurchase($filter)) {
+                echo '{ "error": 0 }';
+            } else {
+                echo '{ "error": 1 }';
+            }
         }
     }
 } else {
