@@ -77,8 +77,12 @@ if (isset($dataPOST['login'])) {
             echo cambiarCantidad($filter);
         } else if ($dataPOST['cart'] == '5') { //List cards
             echo listCards();
+        } else if ($dataPOST['cart'] == '6') { //Purchase
+            $filter = $dataPOST;
+            echo makePurchase($filter);
         }
     }
 } else {
     $session->closeSession();
+    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/Views/productos.html');
 }

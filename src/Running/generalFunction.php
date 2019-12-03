@@ -24,7 +24,10 @@ function isAccepted($user, $pass)
 /* Productos */
 function showCategories($filter)
 {
-    try {
+    $sql = "select * from CategoriaProducto where" .
+        " descripcion like '%" . $filter . "%'";
+    return getJson($sql);
+    /*try {
         $sql = "select * from CategoriaProducto where" .
             " descripcion like '%" . $filter . "%'";
         $result = getData($sql);
@@ -37,12 +40,22 @@ function showCategories($filter)
         return json_encode($json);
     } catch (mysqli_sql_exception $ex) {
         return "false";
-    }
+    }*/
 }
 
 function showProducts($filter)
 {
-    try {
+    global $session;
+    $sqlPlus = '';
+    if (!empty($_SESSION['idUser'])) {
+        $sqlPlus = ',(select count(*) from carrito where idProducto = p.idProducto and idUsuario = ' . $session->getIdUser() . ') as onCart';
+    }
+    $sql = "select idProducto,nombre,descripcion,precio,cantidadDisponible,cantCompras,urlImg,idCategoriaProducto " . $sqlPlus . " from Producto p where" .
+        " (nombre like '%" . $filter['filter'] . "%'
+             or descripcion like '%" . $filter['filter'] .
+        "%' or precio like '%" . $filter['filter'] . "%') " . $filter['category'];
+    return getJson($sql);
+    /*try {
         global $session;
         $sqlPlus = '';
         if (!empty($_SESSION['idUser'])) {
@@ -62,7 +75,7 @@ function showProducts($filter)
         return json_encode($json);
     } catch (mysqli_sql_exception $ex) {
         return "false";
-    }
+    }*/
 }
 
 function addToCart($product)
@@ -128,7 +141,11 @@ function cantExistencia($product)
 
 function showCarrito()
 {
-    try {
+    global $session;
+    $sql = "select idLineaCarrito,p.idProducto as idProducto,urlImg,nombre,cant,precio 
+    from carrito c, producto p where (c.idProducto = p.idProducto) and idUsuario = " . $session->getIdUser();
+    return getJson($sql);
+    /*try {
         global $session;
         $sql = "select idLineaCarrito,p.idProducto as idProducto,urlImg,nombre,cant,precio 
         from carrito c, producto p where (c.idProducto = p.idProducto) and idUsuario = " . $session->getIdUser();
@@ -145,7 +162,7 @@ function showCarrito()
         return json_encode(["error" => 1]);
     } catch (mysqli_sql_exception $ex) {
         return json_encode(["error" => 1]);
-    }
+    }*/
 }
 
 function deleteItemFromCart($filter)
@@ -205,7 +222,10 @@ function cantidadActual($filter)
 
 function listCards()
 {
-    try {
+    global $session;
+    $sql = "select idFormaPago,right(numeroTarjeta,4) as numeroTarjeta from formaPago where idUsuario = " . $session->getIdUser();
+    return getJson($sql);
+    /*try {
         global $session;
         $sql = "select idFormaPago,right(numeroTarjeta,4) as numeroTarjeta from formaPago where idUsuario = " . $session->getIdUser();
         $result = getData($sql);
@@ -221,5 +241,10 @@ function listCards()
         return json_encode(["error" => 1]);
     } catch (mysqli_sql_exception $th) {
         return json_encode(["error" => 1]);
-    }
+    }*/
+}
+
+function makePurchase($filter)
+{
+    echo 'Temp';
 }

@@ -11,7 +11,7 @@
             var total = document.getElementById('total');
             var btnComprar = document.getElementById('btn-comprar');
             var btnAddCard = document.getElementById('btn-newAddCard');
-            var items = [], curCard = { id: -1, referecia: '****' };
+            var items = [], curCard = { id: -1, referecia: '****' }, maxCards, newCards = -1;
 
             /* 
             <tr class="cart-pay-method-row">
@@ -27,22 +27,93 @@
             </tr>
             */
 
-            function newCartMethod(data, i, max) {
+            function validateCvv(data, cb) {
+                var body = document.getElementById('body');
+                var id = 'cart-validate-cvv-card';
+                var divBack = newDOM('div');
+                divBack.setAttribute('class', 'back-dark');
+                divBack.setAttribute('id', id);
+                var divContent = newDOM('div');
+                divContent.setAttribute('class', 'box-center-fixed cart-add-car-back p-1');
+                var title = newDOM('h3');
+                title.setAttribute('class', 'text-center d-block mb');
+                title.appendChild(newTextNode('Digita el cvv'));
+            /**/divContent.appendChild(title);
+                var grCvvTitle = newDOM('div'),//as parent
+                    labelCvv = newDOM('label'),
+                    cvvAsteric = newDOM('p');
+                cvvAsteric.setAttribute('class', 'text-danger d-inline');
+                cvvAsteric.appendChild(newTextNode('*'));
+                grCvvTitle.setAttribute('class', 'form-group');
+                labelCvv.appendChild(newTextNode('Numero de cvv'));
+                labelCvv.appendChild(cvvAsteric);//temp
+                grCvvTitle.appendChild(labelCvv);
+            /**/divContent.appendChild(grCvvTitle);
+                var grCvv = newDOM('div'),//as parent
+                    inputCvv = newDOM('input');
+                grCvv.setAttribute('class', 'form-group');
+                inputCvv.setAttribute('type', 'password');
+                inputCvv.setAttribute('maxlength', '4');
+                inputCvv.setAttribute('class', 'form-content');
+                inputCvv.setAttribute('placeholder', 'Ingresa el codigo cvv');
+                grCvv.appendChild(inputCvv);
+            /**/divContent.appendChild(grCvv);
+                var grAdd = newDOM('div'),//a parent
+                    btnAdd = newDOM('input');
+                grAdd.setAttribute('class', 'form-group');
+                btnAdd.setAttribute('type', 'button');
+                btnAdd.setAttribute('value', 'Agregar');
+                btnAdd.setAttribute('class', 'btn btn-accent d-block w-100');
+                /*Events*/
+                btnAdd.addEventListener('click', function () {
+                    if (inputCvv.value != data) {
+                        inputCvv.style = "border: #ff0000 solid 1px;";
+                    }
+                    cb(inputCvv.value == data);
+                });
+                grAdd.appendChild(btnAdd);
+            /**/divContent.appendChild(grAdd);
+                var grCancel = newDOM('div'),
+                    btnCancel = newDOM('input');
+                grCancel.setAttribute('class', 'form-group');
+                btnCancel.setAttribute('type', 'button');
+                btnCancel.setAttribute('value', 'Cancelar');
+                btnCancel.setAttribute('class', 'btn btn-danger d-block w-100');
+                /*Events*/
+                btnCancel.addEventListener('click', function () { removeMSG(id); });
+                /*END Events*/
+                grCancel.appendChild(btnCancel);
+            /**/divContent.appendChild(grCancel);
+                divBack.appendChild(divContent);
+                body.appendChild(divBack);
+                return divBack;
+            }
+
+            function newCartMethod(data, i) {
                 var tr = newDOM('tr');
                 tr.setAttribute('class', 'cart-pay-method-row');
                 tr.addEventListener('click', function () {
-                    curCard = {
-                        id: data.idFormaPago,
-                        referecia: data.numeroTarjeta
-                    };
-                    var temp;
-                    for (j = 0; j < max; j++) {
-                        temp = document.getElementById('cart-card-selected-' + j);
-                        temp.innerHTML = '';
-                        if (j == i) {
-                            temp.appendChild(newImg({ src: '/Assets/IMG/check.png', alt: 'Seleccionada', width: '45px', height: '45px' }));
+                    var msg = validateCvv(data.numeroTarjeta, function (result) {
+                        if (result) {
+                            curCard = {
+                                id: data.idFormaPago,
+                                referecia: data.numeroTarjeta
+                            };
+                            var temp;
+                            for (j = newCards == -1 ? 0 : newCards; j < maxCards; j++) {
+                                temp = document.getElementById('cart-card-selected-' + j);
+                                if (temp != null) {
+                                    temp.innerHTML = '';
+                                    if (j == i) {
+                                        temp.appendChild(newImg({ src: '/Assets/IMG/check.png', alt: 'Seleccionada', width: '45px', height: '45px' }));
+                                    }
+                                }
+                            }
+                            removeMSG(msg.id);
+                        } else {
+                            errorMessage('El cvv no es valido', msg.childNodes[0]);
                         }
-                    }
+                    });
                 });
                 var tdSelect = newDOM('td');
                 tdSelect.setAttribute('class', 'pr-1 max-width-px-45');
@@ -85,6 +156,7 @@
                     inputNumber = newDOM('input');
                 grNumber.setAttribute('class', 'form-group');
                 inputNumber.setAttribute('type', 'text');
+                inputNumber.setAttribute('maxlength', '16');
                 inputNumber.setAttribute('class', 'form-content');
                 inputNumber.setAttribute('placeholder', 'Ingresa un numero de tarjeta');
                 grNumber.appendChild(inputNumber);
@@ -103,6 +175,7 @@
                     inputCvv = newDOM('input');
                 grCvv.setAttribute('class', 'form-group');
                 inputCvv.setAttribute('type', 'password');
+                inputCvv.setAttribute('maxlength', '4');
                 inputCvv.setAttribute('class', 'form-content');
                 inputCvv.setAttribute('placeholder', 'Ingresa el codigo cvv');
                 grCvv.appendChild(inputCvv);
@@ -115,7 +188,27 @@
                 btnAdd.setAttribute('class', 'btn btn-accent d-block w-100');
                 /*Events*/
                 btnAdd.addEventListener('click', function () {
-                    alert('Agregado'); removeMSG(id);
+                    newCards--;
+                    var numeroTarjet = '';
+                    if (inputNumber.value.length == 16) {
+                        for (i = inputNumber.value.length - 4; i < inputNumber.value.length; i++) {
+                            numeroTarjet += inputNumber.value.charAt(i);
+                        }
+                        if (numeroTarjet == inputCvv.value) {
+                            var data = { numeroTarjeta: numeroTarjet, idFormaPago: newCards };
+                            var newCard = newCartMethod(data, newCards);
+                            cardsList.appendChild(newCard);
+                            removeMSG(id);
+                        } else {
+                            inputCvv.style = "border: #ff0000 solid 1px;";
+                            inputNumber.style = "border: none;";
+                            errorMessage('El codigo cvv es invalido', divContent);
+                        }
+                    } else {
+                        inputNumber.style = "border: #ff0000 solid 1px;";
+                        inputCvv.style = "border: #ff0000 solid 1px;";
+                        errorMessage('La informacion es invalida', divContent);
+                    }
                 });
                 grAdd.appendChild(btnAdd);
                 /**/divContent.appendChild(grAdd);
@@ -128,7 +221,6 @@
                 /*Events*/
                 btnCancel.addEventListener('click', function () { removeMSG(id); });
                 /*END Events*/
-
                 grCancel.appendChild(btnCancel);
                 /**/divContent.appendChild(grCancel);
                 divBack.appendChild(divContent);
@@ -279,9 +371,9 @@
                 postAjaxRequest(apiURL, 'cart=5', function (json) {
                     if (json.errorBody != 'Error' || json.error != '') {
                         cardsList.innerHTML = '';
-                        const max = json.length;
-                        for (i = 0; i < max; i++) {
-                            var card = newCartMethod(json[i], i, max);
+                        maxCards = json.length;
+                        for (i = 0; i < maxCards; i++) {
+                            var card = newCartMethod(json[i], i);
                             cardsList.appendChild(card);
                         }
                     } else {
@@ -308,7 +400,19 @@
             btnComprar.addEventListener('click', function () {
                 if (items.length > 0) {
                     if (curCard.id != -1) {
-                        dialogError('Comprando...');
+                        var msg = dialogWait('Espere un momento');
+                        var data = 'cart=6&idFormaPago=' + curCard.id + '&referencia=' + curCard.referecia;
+                        postAjaxRequest(apiURL, data, function (json) {
+                            if (json.errorBody != 'Error' || json.error != '') {
+                                removeMSG(msg.id);
+                                if (true) {
+                                    errorMessage('La compra se ha efectuado correctamente');
+                                }
+                            } else {
+                                removeMSG(msg.id);
+                                dialogError('Error al efectuar la compra');
+                            }
+                        });
                     } else {
                         dialogError('Debes seleccionar un metodo de pago');
                     }
