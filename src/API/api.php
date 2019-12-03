@@ -47,15 +47,17 @@ if (isset($dataPOST['login'])) {
 } else if (isset($dataPOST['category']) && $dataPOST['category'] == '1') {
     echo showCategories($dataPOST['filter']);
 } else if (isset($dataPOST['addCart'])) {
-    if ($dataPOST['addCart'] == '1') {
-        $product = [
-            "cant" => $dataPOST['cant'],
-            "idProduct" => $dataPOST['idProduct']
-        ];
-        if (addToCart($product)) {
-            echo '{ "add": 1 }';
-        } else {
-            echo '{ "add": 0 }';
+    if (isAccepted($session->getUser(), $session->getPassword())) {
+        if ($dataPOST['addCart'] == '1') {
+            $product = [
+                "cant" => $dataPOST['cant'],
+                "idProduct" => $dataPOST['idProduct']
+            ];
+            if (addToCart($product)) {
+                echo '{ "add": 1 }';
+            } else {
+                echo '{ "add": 0 }';
+            }
         }
     }
 } else if (isset($dataPOST['cart'])) {

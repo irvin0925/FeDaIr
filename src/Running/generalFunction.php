@@ -48,14 +48,8 @@ function addToCart($product)
     try {
         global $session;
         if (cantExistencia($product) >= $product['cant']) {
-            $dml = '';
-            if (alreadyOnCart($product)) {
-                $values = $product['idProduct'] . "," . $session->getIdUser() . ',' . $product['cant'];
-                $dml = "update Carrito set ";
-            } else {
-                $values = $product['idProduct'] . "," . $session->getIdUser() . ',' . $product['cant'];
-                $dml = "insert into Carrito (idProducto,idUsuario,cant) values ($values)";
-            }
+            $values = $product['idProduct'] . "," . $session->getIdUser() . ',' . $product['cant'];
+            $dml = "insert into Carrito (idProducto,idUsuario,cant) values ($values)";
             $result = runDml($dml);
             return $result;
         }
@@ -190,13 +184,42 @@ function moveToPurchase()
             from Carrito where idUsuario = " . $session->getIdUser();
         $result = runDml($dml);
         if ($result) {
-            $dml = "delete from Carrito where idLineaCarrito > 0 and idUsuario = " . $session->getIdUser();
-            $result = runDml($dml);
-            return $result;
+            if (updateInvetary()) {
+                $dml = "delete from Carrito where idLineaCarrito > 0 and idUsuario = " . $session->getIdUser();
+                $result = runDml($dml);
+                return $result;
+            }
         }
         return false;
     } catch (mysqli_sql_exception $th) {
         return false;
+    }
+}
+
+function updateInvetary()
+{
+    try {
+        $json = showCarrito();
+        $carrito = json_decode($json, true);
+        foreach ($carrito as $item) {
+            $json = cantInventoryByProduct($item);
+            $current = json_decode($json, true);
+            $dml = "update Producto set cantidadDisponible = " . ($current[0]['cantidadDisponible'] - $item['cant']) . ', cantCompras = ' . ($current[0]['cantCompras'] + $item['cant']) . ' where idProducto = ' . $item['idProducto'];
+            runDml($dml);
+        }
+        return true;
+    } catch (mysqli_sql_exception $th) {
+        return false;
+    }
+}
+
+function cantInventoryByProduct($product)
+{
+    try {
+        $sql = "select cantidadDisponible,cantCompras from Producto where idProducto = " . $product['idProducto'];
+        return getJson($sql);
+    } catch (mysqli_sql_exception $ex) {
+        return null;
     }
 }
 
