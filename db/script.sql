@@ -1,7 +1,7 @@
 -- Scripts for FideStore
 -- Categorias
 insert into CategoriaProducto (descripcion) values 
-('Tecnologico'),('Hogar'),('Comida'),('Electronico'),('Comunicacion');
+('Tecnologico'),('Hogar'),('Comida'),('Electronico'),('Comunicacion'),('Ferreteria');
 
 -- Productos
 insert into Producto (nombre,descripcion,precio,cantidadDisponible,cantCompras,urlImg,idCategoriaProducto) 
