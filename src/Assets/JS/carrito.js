@@ -11,7 +11,7 @@
             var total = document.getElementById('total');
             var btnComprar = document.getElementById('btn-comprar');
             var btnAddCard = document.getElementById('btn-newAddCard');
-            var items = [], curCard = { id: -1, referecia: '****' }, maxCards, newCards = -1;
+            var items = [], curCard = { id: -1, referecia: '****' }, maxCards = 0, newCards = -1;
 
             /* 
             <tr class="cart-pay-method-row">
@@ -188,13 +188,13 @@
                 btnAdd.setAttribute('class', 'btn btn-accent d-block w-100');
                 /*Events*/
                 btnAdd.addEventListener('click', function () {
-                    newCards--;
                     var numeroTarjet = '';
                     if (inputNumber.value.length == 16) {
                         for (i = inputNumber.value.length - 4; i < inputNumber.value.length; i++) {
                             numeroTarjet += inputNumber.value.charAt(i);
                         }
                         if (numeroTarjet == inputCvv.value) {
+                            newCards--;
                             var data = { numeroTarjeta: numeroTarjet, idFormaPago: newCards };
                             var newCard = newCartMethod(data, newCards);
                             cardsList.appendChild(newCard);
@@ -277,10 +277,10 @@
                 //Event
                 btnLess.addEventListener('click', function () {
                     if (value.innerHTML > 1) {
+                        var msg = dialogWait('Espere un momento...');
                         calcularCantidad({ name: "btn-less", idProduct: data.idProducto }, function (json) {
                             if (json.error == 0) {
                                 value.innerHTML = '';
-                                var msg = dialogWait('Espere un momento...');
                                 value.appendChild(newTextNode(json.cant));
                                 items = items.map(obj => {
                                     if (obj.idProducto != data.idProducto) {
@@ -293,6 +293,7 @@
                                 calcularValores();
                                 removeMSG(msg.id);
                             } else {
+                                removeMSG(msg.id);
                                 dialogError(json.msg);
                             }
                         });
@@ -303,10 +304,10 @@
                 //END Event
                 //Event
                 btnPlus.addEventListener('click', function () {
+                    var msg = dialogWait('Espere un momento...');
                     calcularCantidad({ name: "btn-plus", idProduct: data.idProducto }, function (json) {
                         if (json.error == 0) {
                             value.innerHTML = '';
-                            var msg = dialogWait('Espere un momento...');
                             value.appendChild(newTextNode(json.cant));
                             items = items.map(obj => {
                                 if (obj.idProducto != data.idProducto) {
@@ -319,6 +320,7 @@
                             calcularValores();
                             removeMSG(msg.id);
                         } else {
+                            removeMSG(msg.id);
                             dialogError(json.msg);
                         }
                     });
@@ -371,7 +373,9 @@
                 postAjaxRequest(apiURL, 'cart=5', function (json) {
                     if (json.errorBody != 'Error' || json.error != '') {
                         cardsList.innerHTML = '';
-                        maxCards = json.length;
+                        if (json.length != undefined){
+                            maxCards = json.length;
+                        }
                         for (i = 0; i < maxCards; i++) {
                             var card = newCartMethod(json[i], i);
                             cardsList.appendChild(card);
