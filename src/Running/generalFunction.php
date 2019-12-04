@@ -34,7 +34,7 @@ function showProducts($filter)
     global $session;
     $sqlPlus = '';
     if (!empty($_SESSION['idUser'])) {
-        $sqlPlus = ',(select count(*) from carrito where idProducto = p.idProducto and idUsuario = ' . $session->getIdUser() . ') as onCart';
+        $sqlPlus = ',(select count(*) from Carrito where idProducto = p.idProducto and idUsuario = ' . $session->getIdUser() . ') as onCart';
     }
     $sql = "select idProducto,nombre,descripcion,precio,cantidadDisponible,cantCompras,urlImg,idCategoriaProducto " . $sqlPlus . " from Producto p where" .
         " (nombre like '%" . $filter['filter'] . "%'
@@ -102,7 +102,7 @@ function showCarrito()
 {
     global $session;
     $sql = "select idLineaCarrito,p.idProducto as idProducto,urlImg,nombre,cant,precio 
-    from carrito c, producto p where (c.idProducto = p.idProducto) and idUsuario = " . $session->getIdUser();
+    from Carrito c, Producto p where (c.idProducto = p.idProducto) and idUsuario = " . $session->getIdUser();
     return getJson($sql);
 }
 
@@ -259,6 +259,6 @@ function makePurchase($filter)
 function listCards()
 {
     global $session;
-    $sql = "select idFormaPago,right(numeroTarjeta,4) as numeroTarjeta from formaPago where idUsuario = " . $session->getIdUser();
+    $sql = "select idFormaPago,right(numeroTarjeta,4) as numeroTarjeta from FormaPago where idUsuario = " . $session->getIdUser();
     return getJson($sql);
 }
