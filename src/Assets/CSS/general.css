@@ -65,6 +65,24 @@
     border-color: #008cba;
 }
 
+/*Div*/
+.principal{
+    width: 100%;
+    margin: 1em;
+    text-align: center;
+}
+    
+    .izquierdo{
+    width: 35%; 
+    float:left;
+    }
+    
+    .derecho{
+        width: 80%;
+        margin-left: 40em;
+ 
+    }
+
 /*Tableta*/
 
 @media screen and (max-width:1100px) {
@@ -85,6 +103,21 @@
         background-color: #007caa;
         color: #fff;
     }
+
+    .principal{
+        width: 100%;
+        text-align: center;
+    }
+        
+        .izquierdo{
+            width: 100%;
+
+        }
+        
+        .derecho{
+            width: 100%;
+            margin-left: 0em;
+        }
 }
 
 /*Celular*/
@@ -108,4 +141,19 @@
         background-color: #007caa;
         color: #fff;
     }
+
+    .principal{
+        width: 100%;
+        text-align: center;
+    }
+        
+        .izquierdo{
+            width: 100%;
+
+        }
+        
+        .derecho{
+            width: 100%;
+            margin-left: 0em;
+        }
 }

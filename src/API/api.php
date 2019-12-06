@@ -77,6 +77,41 @@ if (isset($dataPOST['login'])) {
             echo cambiarCantidad($filter);
         }
     }
-} else {
+} else if (isset($dataPOST['addUsers'])) {
+        if ($dataPOST['addUsers'] == '1') {
+            $user = [
+                "cedula" => $dataPOST['cedula'],
+                "usuario" => $dataPOST['usuario'],
+                "contra" => $dataPOST['contra'],
+                "nombre" => $dataPOST['nombre'],
+                "telefono" => $dataPOST['telefono']
+            ];
+         
+            if (addUser($user)) {
+                echo '{ "add": 1 }';
+            } else {
+                echo '{ "add": 0 }';
+            }
+        }
+} else if (isset($dataPOST['addTarjeta'])) {
+    if ($dataPOST['addTarjeta'] == '1') {
+        $tarjeta = [
+            "tarjeta" => $dataPOST['tarjeta'],
+            "tipo" => $dataPOST['tipo']
+        ];
+     
+        if (addTarjeta($tarjeta)) {
+            echo '{ "add": 1 }';
+        } else {
+            echo '{ "add": 0 }';
+        }
+    }else if($dataPOST['addTarjeta'] == '2'){
+        echo showTarjeta();
+    }
+} else if (isset($dataPOST['historial'])) {
+    if ($dataPOST['historial'] == '1') {
+        echo showHistorial();
+    }
+}else {
     $session->closeSession();
 }

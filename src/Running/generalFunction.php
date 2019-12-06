@@ -200,3 +200,46 @@ function cantidadActual($filter)
         return 0;
     }
 }
+
+function addUser($user)
+{
+    try {
+            $dml = '';
+                $values = '"'.$user['cedula'] . '","' . $user['usuario'] . '",md5(' . $user['contra']. '),"' . $user['nombre']. '","' . $user['telefono']. '",' . '"1"';
+                $dml = "insert into usuario (cedula,usuario,contra,nombre,telefono,idPerfil) values ($values)";
+            $result = runDml($dml);
+            return $result;
+
+        return false;
+    } catch (mysqli_sql_exception $ex) {
+        return false;
+    }
+}
+
+function addTarjeta($tarjeta)
+{
+    try {
+        global $session;
+            $dml = '';
+                $values = '"'. $session->getIdUser() . '","' . $tarjeta['tarjeta'] . '","' . $tarjeta['tipo']. '"';
+                $dml = "insert into formapago (idusuario,numerotarjeta,tipo) values ($values)";
+            $result = runDml($dml);
+            return $result;
+
+        return false;
+    } catch (mysqli_sql_exception $ex) {
+        return false;
+    }
+}
+
+function showTarjeta(){
+        global $session;
+        $sql = "select idFormaPago,numeroTarjeta, tipo from formaPago where idUsuario = " . $session->getIdUser();
+        return getJson($sql);
+}
+
+function showHistorial(){
+    global $session;
+    $sql = "select * from facturaencabezado where idUsuario = " . $session->getIdUser();
+    return getJson($sql);
+}
