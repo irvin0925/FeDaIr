@@ -11,3 +11,5 @@ value ('Bagels','Disfruta de los exquisitos bagels, crujientes',5500,5,0,'temp_b
 insert into producto (nombre,descripcion,precio,cantidadDisponible,cantCompras,urlImg,idCategoriaProducto)
 values ('Caja de herramientas','Combo de varias herramientas (martillo,desatornillador,pinzas,etc)',15000,15,0,
 'temp_herramientas.png',6);
+
+INSERT INTO HOGAR()
